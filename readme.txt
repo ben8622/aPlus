@@ -5,3 +5,7 @@ aPlus GPA Calculator
 Team Captain, Benjamin Knight 
 Jonathan Medina
 Vinson Mach 
+Julia Nguyen
+Bailey Nguyen
+Foram Khatiwala
+Yan Wang
