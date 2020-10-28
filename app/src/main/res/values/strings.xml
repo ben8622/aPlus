@@ -8,4 +8,33 @@
     <string name="desiredGPASwitch">Display needed GPA</string>
     <string name="homePageTitle">aPlus</string>
     <string name="viewSemsButton">View Semesters</string>
+
+    <string name="semester1">Semester1</string>
+    <string name="semester2">Semester2</string>
+    <string name="semester3">Semester3</string>
+    <string name="semester4">Semester4</string>
+
+    <string-array name="semester1">
+        <item>Class1</item>
+        <item>Class2</item>
+        <item>Class3</item>
+    </string-array>
+
+    <string-array name="semester2">
+        <item>Class1</item>
+        <item>Class2</item>
+        <item>Class3</item>
+    </string-array>
+
+    <string-array name="semester3">
+        <item>Class1</item>
+        <item>Class2</item>
+        <item>Class3</item>
+    </string-array>
+
+    <string-array name="semester4">
+        <item>Class1</item>
+        <item>Class2</item>
+        <item>Class3</item>
+    </string-array>
 </resources>
