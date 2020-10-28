@@ -2,4 +2,6 @@
 aPlus GPA Calculator
 
 
-Team Captain, Benjamin Knight
+Team Captain, Benjamin Knight 
+Jonathan Medina
+Vinson Mach 
