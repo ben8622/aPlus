@@ -42,11 +42,12 @@
         android:id="@+id/button"
         android:layout_width="404dp"
         android:layout_height="61dp"
-        android:onClick="viewSemesters"
         android:text="@string/viewSemsButton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:onClick="viewSemesters"/>
+
 
     <TextView
         android:id="@+id/textView3"
