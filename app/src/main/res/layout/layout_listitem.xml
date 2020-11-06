@@ -19,7 +19,7 @@
         android:textSize="40sp"
         android:textAlignment="center"
         android:textColor="@color/white"
-        android:background="@color/purple_500"/>
+        android:background="@color/teal_200"/>
 
     <TextView
         android:id="@+id/semester_name"
@@ -29,6 +29,6 @@
         android:textSize="40sp"
         android:textAlignment="center"
         android:textColor="@color/white"
-        android:background="@color/purple_500" />
+        android:background="@color/teal_200" />
 
 </RelativeLayout>

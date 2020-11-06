@@ -56,7 +56,7 @@ public class viewClasses extends AppCompatActivity {
 
         RecyclerView recyclerView = findViewById(R.id.recyclerv_view);
         // Passing the adapter our info on its construction
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, mClassNames, mClassGrades);
+        RecyclerViewAdapterClasses adapter = new RecyclerViewAdapterClasses(this, mClassNames, mClassGrades, mClassWeights);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }

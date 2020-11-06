@@ -41,7 +41,7 @@ public class RecyclerViewAdapterClasses extends RecyclerView.Adapter<RecyclerVie
     @Override
     // method that's responsible for inflating the view, usually same for any recylcerivew/adapter
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_listitem, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_listitem_classes, parent, false);
         ViewHolder holder = new ViewHolder(view);
         return holder;
     }
@@ -88,7 +88,7 @@ public class RecyclerViewAdapterClasses extends RecyclerView.Adapter<RecyclerVie
              // Viewholder class created
              className = itemView.findViewById(R.id.class_name);
              classGrade = itemView.findViewById(R.id.class_grade);
-            classWeight = itemView.findViewById(R.id.class_weight);
+             classWeight = itemView.findViewById(R.id.class_weight);
              parentLayout = itemView.findViewById(R.id.parent_layout);
         }
     }

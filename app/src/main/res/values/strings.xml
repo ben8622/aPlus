@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">aPlusv2</string>
-    <string name="cumGPA">0.0</string>
+    <string name="app_name">aPlus</string>
+    <string name="cumGPA">3.4</string>
     <string name="cumGPATitle">Cumulative GPA</string>
     <string name="neededGPA">0.0</string>
     <string name="neededGPATitle">This semester you need a </string>

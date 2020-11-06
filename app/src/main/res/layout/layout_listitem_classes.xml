@@ -9,28 +9,29 @@
 
     <TextView
         android:id="@+id/class_grade"
-        android:layout_width="109dp"
+        android:layout_width="20dp"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="5dp"
         android:layout_marginEnd="0dp"
         android:layout_toRightOf="@+id/class_weight"
         android:text="99.00"
-        android:textSize="40sp"
+        android:textSize="20sp"
         android:textAlignment="center"
         android:textColor="@color/white"
-        android:background="@color/purple_500"/>
+        android:background="@color/teal_200"/>
 
     <TextView
         android:id="@+id/class_name"
-        android:layout_width="150dp"
+        android:layout_width="239dp"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
         android:layout_marginStart="5dp"
+        android:background="@color/teal_200"
         android:text="Class1"
-        android:textSize="40sp"
         android:textAlignment="center"
         android:textColor="@color/white"
-        android:background="@color/purple_500" />
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/class_weight"
@@ -39,9 +40,9 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/class_name"
         android:text="3"
-        android:textSize="40sp"
+        android:textSize="20sp"
         android:textAlignment="center"
         android:textColor="@color/white"
-        android:background="@color/purple_500" />
+        android:background="@color/teal_200" />
 
 </RelativeLayout>
