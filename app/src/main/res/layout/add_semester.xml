@@ -14,40 +14,19 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/classGradeInput" />
-
-    <EditText
-        android:id="@+id/classWeightInput"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Class Weight"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="@+id/classNameInput"
-        app:layout_constraintStart_toStartOf="@+id/classNameInput"
-        app:layout_constraintTop_toBottomOf="@+id/classNameInput" />
-
-    <EditText
-        android:id="@+id/classGradeInput"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Class Grade"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="@+id/classWeightInput"
-        app:layout_constraintStart_toStartOf="@+id/classWeightInput"
-        app:layout_constraintTop_toBottomOf="@+id/classWeightInput" />
+        app:layout_constraintTop_toBottomOf="@+id/classNameInput"
+        app:layout_constraintVertical_bias="0.2" />
 
     <EditText
         android:id="@+id/classNameInput"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="168dp"
+        android:layout_marginTop="284dp"
         android:ems="10"
-        android:hint="Class Name"
+        android:hint="Semester Name"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

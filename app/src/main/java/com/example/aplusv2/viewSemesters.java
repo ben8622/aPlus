@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -28,21 +30,30 @@ public class viewSemesters extends AppCompatActivity {
         initArrayListData();
     }
 
+    public void delButtonClicked(View view) {
+
+        Toast.makeText(this, "Deleted", Toast.LENGTH_SHORT).show();
+    }
+    public void addButtonClicked(View view) {
+
+        Toast.makeText(this, "Added", Toast.LENGTH_SHORT).show();
+    }
+
     // This function we would update with a function to extract our User's info
     private void initArrayListData(){
         Log.d(TAG, "initArrayListData: prepping array data");
 
-        mSemesterNames.add("Semester1");
+        mSemesterNames.add("SPRING21");
+        mSemesterGrades.add("2.9");
+
+        mSemesterNames.add("FALL20");
+        mSemesterGrades.add("3.2");
+
+        mSemesterNames.add("SPRING20");
         mSemesterGrades.add("4.0");
 
-        mSemesterNames.add("Semester2");
-        mSemesterGrades.add("4.0");
-
-        mSemesterNames.add("Semester3");
-        mSemesterGrades.add("4.0");
-
-        mSemesterNames.add("Semester4");
-        mSemesterGrades.add("4.0");
+        mSemesterNames.add("FALL19");
+        mSemesterGrades.add("3.1");
 
         // call this after you get all data
         initRecyclerView();

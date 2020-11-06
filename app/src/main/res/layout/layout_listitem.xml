@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="10dp"
@@ -9,26 +10,38 @@
 
     <TextView
         android:id="@+id/semester_grade"
-        android:layout_width="109dp"
+        android:layout_width="88dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
         android:layout_marginStart="5dp"
-        android:layout_marginEnd="0dp"
+        android:layout_marginLeft="21dp"
+        android:layout_marginEnd="5dp"
+        android:layout_toStartOf="@+id/button3"
         android:layout_toRightOf="@+id/semester_name"
+        android:background="@color/teal_200"
         android:text="4.30"
-        android:textSize="40sp"
         android:textAlignment="center"
         android:textColor="@color/white"
-        android:background="@color/teal_200"/>
+        android:textSize="40sp" />
 
     <TextView
         android:id="@+id/semester_name"
-        android:layout_width="287dp"
+        android:layout_width="212dp"
         android:layout_height="wrap_content"
+        android:background="@color/teal_200"
         android:text="Semester1"
-        android:textSize="40sp"
         android:textAlignment="center"
         android:textColor="@color/white"
-        android:background="@color/teal_200" />
+        android:textSize="40sp" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="64dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="0dp"
+        android:backgroundTint="@color/design_default_color_error"
+        android:onClick="delButtonClicked"
+        app:icon="@android:drawable/ic_menu_delete"
+        app:iconTint="@color/white" />
 
 </RelativeLayout>

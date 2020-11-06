@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -27,25 +29,34 @@ public class viewClasses extends AppCompatActivity {
         initArrayListData();
     }
 
+    public void delButtonClicked(View view) {
+
+        Toast.makeText(this, "Deleted", Toast.LENGTH_SHORT).show();
+    }
+    public void addButtonClicked(View view) {
+
+        Toast.makeText(this, "Added", Toast.LENGTH_SHORT).show();
+    }
+
     // This function we would update with a function to extract our User's info
     private void initArrayListData(){
         Log.d(TAG, "initArrayListData: prepping array data");
 
-        mClassNames.add("Class1");
-        mClassGrades.add("90.00");
+        mClassNames.add("CSE3310");
+        mClassGrades.add("99.99");
         mClassWeights.add("3");
 
-        mClassNames.add("Class2");
-        mClassGrades.add("90.00");
+        mClassNames.add("IE3301");
+        mClassGrades.add("86.40");
         mClassWeights.add("3");
 
-        mClassNames.add("Class3");
-        mClassGrades.add("90.00");
+        mClassNames.add("CSE1220");
+        mClassGrades.add("91.69");
         mClassWeights.add("3");
 
-        mClassNames.add("Class4");
-        mClassGrades.add("90.00");
-        mClassWeights.add("3");
+        mClassNames.add("CSE4420");
+        mClassGrades.add("56.00");
+        mClassWeights.add("4");
 
         // call this after you get all data
         initRecyclerView();

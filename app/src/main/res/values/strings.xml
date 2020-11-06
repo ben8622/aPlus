@@ -2,9 +2,9 @@
     <string name="app_name">aPlus</string>
     <string name="cumGPA">3.4</string>
     <string name="cumGPATitle">Cumulative GPA</string>
-    <string name="neededGPA">0.0</string>
+    <string name="neededGPA">3.6</string>
     <string name="neededGPATitle">This semester you need a </string>
-    <string name="desiredGPA">Enter the GPA you want to achieve (0.00-4.00)</string>
+    <string name="desiredGPA">GPA you want(0.00-4.00)</string>
     <string name="desiredGPASwitch">Display needed GPA</string>
     <string name="homePageTitle">aPlus</string>
     <string name="viewSemsButton">View Semesters</string>
