@@ -8,6 +8,10 @@
     <string name="desiredGPASwitch">Display needed GPA</string>
     <string name="homePageTitle">aPlus</string>
     <string name="viewSemsButton">View Semesters</string>
+    <string name="preference_file">com.example.aPlusv2</string>
+    <string name="USER_KEY">username</string>
+    <string name="SEM_KEY">semester</string>
+    <string name="COURSE_KEY">course</string>
 
     <string name="semester1">Semester1</string>
     <string name="semester2">Semester2</string>

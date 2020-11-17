@@ -3,6 +3,7 @@ package com.example.aplusv2;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +18,9 @@ public class Login extends AppCompatActivity {
     Button btn_login, btn_register;
     EditText et_username, et_password;
     DatabaseHelper db_helper;
+
+    SharedPreferences shared_pref;
+    private final String USER_KEY = "username";
 
     User dummy_user = new User("user", "password");
     Semester dummy_semester = new Semester(dummy_user.getUserID(), "Semester1");
@@ -35,32 +39,26 @@ public class Login extends AppCompatActivity {
         et_username = findViewById(R.id.et_username);
         et_password = findViewById(R.id.et_password);
 
+        shared_pref = Login.this.getSharedPreferences(getString(R.string.preference_file), MODE_PRIVATE);
+
         db_helper = new DatabaseHelper(Login.this);
+    }
 
-
+    public void onLogin(User u){
+        SharedPreferences.Editor prefEditor = shared_pref.edit();
+        try{
+            prefEditor.putString(getString(R.string.USER_KEY), u.getUserID());
+            prefEditor.apply();
+        }
+        catch (Exception e){
+            Toast.makeText( Login.this, "ERROR in adding user to preferences", Toast.LENGTH_LONG).show();
+        }
 
     }
 
     public void registerClicked(View view){
         Intent intent = new Intent(this, Register.class);
         startActivity(intent);
-        /*
-        try{
-
-            db_helper = new DatabaseHelper(Login.this);
-
-            db_helper.addUser(dummy_user);
-            db_helper.addSemester(dummy_semester);
-            db_helper.addCourse(dummy_course);
-
-            Toast.makeText( Login.this, "Added User succesfully.", Toast.LENGTH_SHORT).show();
-        }
-        catch (Exception e) {
-            Toast.makeText( Login.this, "ERROR ADDING USER: " + e.toString(), Toast.LENGTH_SHORT).show();
-            String TAG = "reg_clicked";
-            Log.e(TAG, "registerClicked: ", e);
-        }
-         */
     }
 
     public void loginClicked(View view){
@@ -75,6 +73,7 @@ public class Login extends AppCompatActivity {
 
         for(int i = 0; i < user_list.size(); i++){
             if(username.equals(user_list.get(i).getUserID()) && password.equals(user_list.get(i).getPass())){
+                onLogin(user_list.get(i));
                 Toast.makeText( Login.this, "User logged in.", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
