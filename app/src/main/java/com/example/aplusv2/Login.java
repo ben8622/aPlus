@@ -30,7 +30,7 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
 
-        btn_login =findViewById(R.id.btn_login);
+        btn_login = findViewById(R.id.btn_login);
         btn_register = findViewById(R.id.btn_register);
         et_username = findViewById(R.id.et_username);
         et_password = findViewById(R.id.et_password);
@@ -59,9 +59,30 @@ public class Login extends AppCompatActivity {
         }
     }
 
+    public void loginClicked(View view){
+
+        db_helper = new DatabaseHelper(Login.this);
+
+        /* grabs text from input fields */
+        String username = et_username.getText().toString();
+        String password = et_password.getText().toString();
+
+        List<User> user_list = db_helper.getAllUsers();
+
+        for(int i = 0; i < user_list.size(); i++){
+            if(username.equals(user_list.get(i).getUserID()) && password.equals(user_list.get(i).getPass())){
+                Toast.makeText( Login.this, "User logged in.", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                return;
+            }
+        }
+        String error = "Invalid username and password.";
+        Toast.makeText( Login.this, error, Toast.LENGTH_SHORT).show();
+    }
+
     /** This is called when "View Semesters" button is hit */
     public void viewGPA(View view){
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+
     }
 }

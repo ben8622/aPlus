@@ -9,6 +9,9 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     /*  Our names for tables, some names will be reused in other tables (i.e. USER_ID) */
@@ -46,8 +49,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         /* sql code to create the database */
         String user_tbl_string = "CREATE TABLE IF NOT EXISTS " + USER_TABLE + "(" +
-                COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                COLUMN_USER_ID + " TEXT, " +
+                COLUMN_USER_ID + " TEXT UNIQUE, " +
                 COLUMN_PASS + " TEXT, " +
                 COLUMN_CUMGPA + " NUMERIC )";
         String semester_tbl_string = "CREATE TABLE IF NOT EXISTS " + SEM_TABLE + "(" +
@@ -200,6 +202,32 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         else{
             return false;
         }
+    }
+
+    public List<User> getAllUsers(){
+        List<User> all_users = new ArrayList<>();
+
+        String query_string ="SELECT * FROM " + USER_TABLE;
+
+        SQLiteDatabase db =this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(query_string, null);
+
+        if(cursor.moveToFirst()){
+            do{
+                String username = cursor.getString(0);
+                String password = cursor.getString(1);
+
+                User tmp_user = new User(username, password);
+
+                all_users.add(tmp_user);
+
+            }while(cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return all_users;
     }
 
 }
