@@ -42,6 +42,9 @@ public class Login extends AppCompatActivity {
     }
 
     public void registerClicked(View view){
+        Intent intent = new Intent(this, Register.class);
+        startActivity(intent);
+        /*
         try{
 
             db_helper = new DatabaseHelper(Login.this);
@@ -53,10 +56,11 @@ public class Login extends AppCompatActivity {
             Toast.makeText( Login.this, "Added User succesfully.", Toast.LENGTH_SHORT).show();
         }
         catch (Exception e) {
-            Toast.makeText( Login.this, e.toString(), Toast.LENGTH_SHORT).show();
+            Toast.makeText( Login.this, "ERROR ADDING USER: " + e.toString(), Toast.LENGTH_SHORT).show();
             String TAG = "reg_clicked";
             Log.e(TAG, "registerClicked: ", e);
         }
+         */
     }
 
     public void loginClicked(View view){

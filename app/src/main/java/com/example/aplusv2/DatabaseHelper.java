@@ -98,7 +98,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cv.put(COLUMN_CUMGPA, 0.0);
 
         // insert = -1 if fails
-        long insert = db.insert(USER_TABLE, null, cv);
+        long insert = db.insertOrThrow(USER_TABLE, null, cv);
         db.close();
         if(insert == -1){
             return false;
@@ -119,7 +119,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cv.put(COLUMN_SEM_GPA, 0.0);
 
         // insert = -1 if fails
-        long insert = db.insert(SEM_TABLE, null, cv);
+        long insert = db.insertOrThrow(SEM_TABLE, null, cv);
         db.close();
         if(insert == -1){
             return false;
@@ -143,7 +143,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cv.put(COLUMN_LETTER_GRADE, course.getCourseLetterGrade());
 
         // insert = -1 if fails
-        long insert = db.insert(COURSE_TABLE, null, cv);
+        long insert = db.insertOrThrow(COURSE_TABLE, null, cv);
         db.close();
         if(insert == -1){
             return false;
