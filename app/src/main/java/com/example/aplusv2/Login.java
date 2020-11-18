@@ -24,7 +24,7 @@ public class Login extends AppCompatActivity {
 
     User dummy_user = new User("user", "password");
     Semester dummy_semester = new Semester(dummy_user.getUserID(), "Semester1");
-    Course dummy_course = new Course(dummy_user.getUserID(), dummy_semester.getSemesterID(), "1101CLASS", 4, 88.3, "B");
+    Course dummy_course = new Course(dummy_user.getUserID(), dummy_semester.getSemesterID(), "1101CLASS", 4, 88.3);
 
 
 

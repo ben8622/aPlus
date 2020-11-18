@@ -5,10 +5,10 @@ public class Course {
     private String sem_id;
     private String course_id;
     private int weight;
-    private float grade;
+    private double grade;
     private String letter_grade;
 
-    public Course(String user_id, String sem_id, String course_id, int weight, float grade) {
+    public Course(String user_id, String sem_id, String course_id, int weight, double grade) {
         this.user_id = user_id;
         this.sem_id = sem_id;
         this.course_id = course_id;
@@ -17,7 +17,7 @@ public class Course {
         letter_grade = letterGrade(grade);
     }
 
-    public String letterGrade(float grade){
+    public String letterGrade(double grade){
         if(grade >= 90){
             return "A";
         }
