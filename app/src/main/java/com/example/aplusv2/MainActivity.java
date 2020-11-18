@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(this, "Target GPA Shown", Toast.LENGTH_SHORT).show();
     }
 
-    /** This is called when "View Semesters" button is hit */
     public void viewSemesters(View view){
         Intent intent = new Intent(this, viewSemesters.class);
         startActivity(intent);

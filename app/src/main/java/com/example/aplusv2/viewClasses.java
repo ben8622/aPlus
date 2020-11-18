@@ -5,11 +5,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class viewClasses extends AppCompatActivity {
 
@@ -19,12 +21,18 @@ public class viewClasses extends AppCompatActivity {
     private ArrayList<String> mClassNames = new ArrayList<>();
     private ArrayList<String> mClassWeights = new ArrayList<>();
     private ArrayList<String> mClassGrades = new ArrayList<>();
+    List<Course> users_courses;
+    DatabaseHelper db_helper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_classes);
         Log.d(TAG, "onCreate:  started");
+
+        db_helper = new DatabaseHelper(viewClasses.this);
+
+        users_courses = db_helper.getAllCourses("user", "Semester1");
 
         initArrayListData();
     }
@@ -42,21 +50,11 @@ public class viewClasses extends AppCompatActivity {
     private void initArrayListData(){
         Log.d(TAG, "initArrayListData: prepping array data");
 
-        mClassNames.add("CSE3310");
-        mClassGrades.add("99.99");
-        mClassWeights.add("3");
-
-        mClassNames.add("IE3301");
-        mClassGrades.add("86.40");
-        mClassWeights.add("3");
-
-        mClassNames.add("CSE1220");
-        mClassGrades.add("91.69");
-        mClassWeights.add("3");
-
-        mClassNames.add("CSE4420");
-        mClassGrades.add("56.00");
-        mClassWeights.add("4");
+        for(int i = 0; i < users_courses.size(); i++){
+            mClassNames.add(users_courses.get(i).getCourseID());
+            mClassGrades.add(String.format("%.2f", users_courses.get(i).getCourseGrade()));
+            mClassWeights.add(Integer.toString(users_courses.get(i).getCourseWeight()));
+        }
 
         // call this after you get all data
         initRecyclerView();
