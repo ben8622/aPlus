@@ -153,6 +153,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    /* pass in the object and helper searches database for it and will delete */
     public boolean deleteUser(User user){
         boolean ret = false;
 
@@ -204,6 +205,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    /* Will returns lists of the objects, semesters and courses also return by a specified key */
     public List<User> getAllUsers(){
         List<User> all_users = new ArrayList<>();
 
@@ -228,6 +230,71 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return all_users;
+    }
+    public List<Semester> getAllSemester(String user_id){
+        /* a user_id is passed in this function to only retrieve the semesters from the specified user */
+        List<Semester> all_sems = new ArrayList<>();
+
+        String query_string ="SELECT * FROM " + SEM_TABLE;
+
+        SQLiteDatabase db =this.getReadableDatabase();
+
+        /* cursor contains ALL semester items from database */
+        Cursor cursor = db.rawQuery(query_string, null);
+
+        if(cursor.moveToFirst()){
+            do{
+                String user = cursor.getString(0);
+                if(user_id.equals(user)){
+                    /* grab rest of values */
+                    String sem_id = cursor.getString(1);
+                    float semGPA = cursor.getFloat(2);
+
+                    /* create new object based off grabbed values */
+                    Semester temp_sem = new Semester(user, sem_id, semGPA);
+
+                    all_sems.add(temp_sem);
+
+                }
+
+            }while(cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return all_sems;
+    }
+    public List<Course> getAllCourses(String user_id, String sem_id){
+        /* a user_id & sem_id is passed in this function to only retrieve the courses from the specified user & semester */
+        List<Course> all_courses = new ArrayList<>();
+
+        String query_string ="SELECT * FROM " + COURSE_TABLE;
+
+        SQLiteDatabase db =this.getReadableDatabase();
+
+        /* cursor contains ALL course items from database */
+        Cursor cursor = db.rawQuery(query_string, null);
+
+        if(cursor.moveToFirst()){
+            do{
+                String user = cursor.getString(0);
+                String sem = cursor.getString(1);
+                if(user_id.equals(user) && sem_id.equals(sem)){
+                    String course_id = cursor.getString(2);
+                    int course_weight = cursor.getInt(3);
+                    float course_grade = cursor.getFloat(4);
+
+                    Course tmp_course = new Course(user, sem, course_id, course_weight, course_grade);
+
+                    all_courses.add(tmp_course);
+                }
+
+            }while(cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return all_courses;
     }
 
 }
