@@ -84,8 +84,4 @@ public class Login extends AppCompatActivity {
         Toast.makeText( Login.this, error, Toast.LENGTH_SHORT).show();
     }
 
-    /** This is called when "View Semesters" button is hit */
-    public void viewGPA(View view){
-
-    }
 }
