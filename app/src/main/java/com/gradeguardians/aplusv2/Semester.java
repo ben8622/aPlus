@@ -1,6 +1,4 @@
-package com.example.aplusv2;
-
-import java.util.ArrayList;
+package com.gradeguardians.aplusv2;
 
 public class Semester {
     private String user_id;
