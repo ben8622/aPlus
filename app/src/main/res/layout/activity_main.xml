@@ -53,13 +53,15 @@
         android:id="@+id/textView4"
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:layout_marginTop="256dp"
         android:password="false"
         android:text="@string/cumGPA"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
         app:layout_constraintBottom_toTopOf="@+id/textView"
         app:layout_constraintEnd_toEndOf="@+id/textView"
-        app:layout_constraintStart_toStartOf="@+id/textView" />
+        app:layout_constraintStart_toStartOf="@+id/textView"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView5"
