@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.util.Log;
@@ -37,18 +38,40 @@ public class viewClasses extends AppCompatActivity {
         initArrayListData();
     }
 
+
+    @Override
+    protected void onRestart(){
+        super.onRestart();
+
+        users_courses.clear();
+        users_courses = db_helper.getAllCourses("user", "Semester1");
+
+        initArrayListData();
+    }
+
+
     public void delButtonClicked(View view) {
 
         Toast.makeText(this, "Deleted", Toast.LENGTH_SHORT).show();
     }
-    public void addButtonClicked(View view) {
 
-        Toast.makeText(this, "Added", Toast.LENGTH_SHORT).show();
+    /*  NEED TO UPDATE, LIST DOESN'T UPDATE ON RETURN
+    *
+    *
+     */
+    public void addButtonClicked(View view) {
+        Intent intent = new Intent(this, AddCourse.class);
+        startActivity(intent);
+
     }
 
     // This function we would update with a function to extract our User's info
     private void initArrayListData(){
         Log.d(TAG, "initArrayListData: prepping array data");
+
+        mClassNames.clear();
+        mClassGrades.clear();
+        mClassWeights.clear();
 
         for(int i = 0; i < users_courses.size(); i++){
             mClassNames.add(users_courses.get(i).getCourseID());
