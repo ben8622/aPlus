@@ -5,16 +5,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
+import android.os.Handler;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
 
 public class Login extends AppCompatActivity {
-
     Button btn_login, btn_register;
     EditText et_username, et_password;
     DatabaseHelper db_helper;
@@ -25,9 +29,6 @@ public class Login extends AppCompatActivity {
     User dummy_user = new User("user", "password");
     Semester dummy_semester = new Semester(dummy_user.getUserID(), "Semester1");
     Course dummy_course = new Course(dummy_user.getUserID(), dummy_semester.getSemesterID(), "1101CLASS", 4, 88.3);
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
