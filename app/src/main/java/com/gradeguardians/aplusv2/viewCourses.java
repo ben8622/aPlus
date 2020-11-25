@@ -35,7 +35,7 @@ public class viewCourses extends AppCompatActivity {
 
         m_users_courses = grabCourses("user", "Semester1");
 
-        /* Called from onCreate and onRestart to alwasy have an updated list */
+        /* Called from onCreate and onRestart to always have an updated list */
         initRecyclerView();
     }
 
