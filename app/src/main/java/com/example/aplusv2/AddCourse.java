@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+
+/* CALLED WHEN btn_add CLICKED ON viewCourses */
 public class AddCourse extends AppCompatActivity {
 
     EditText et_course_id, et_course_grade, et_course_weight;

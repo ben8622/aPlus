@@ -2,12 +2,10 @@ package com.example.aplusv2;
 
 import android.content.Context;
 import android.content.Intent;
-import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -63,7 +61,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 // For now this will just display a popup of the semester name, but we want it
                 // to eventually bring you to a new activity holding the classes of the semester
                 Toast.makeText(mContext, mSemesterNames.get(position), Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(mContext, viewClasses.class);
+                Intent intent = new Intent(mContext, viewCourses.class);
                 mContext.startActivity(intent);
             }
         });

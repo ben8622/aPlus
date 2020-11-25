@@ -190,12 +190,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         boolean ret = false;
 
         SQLiteDatabase db = this.getWritableDatabase();
-        String query_string = "DELETE FROM " + SEM_TABLE +
-                " WHERE " + COLUMN_USER_ID + " = " + course.getUserID() +
-                " AND " + COLUMN_SEM_ID + " = " + course.getSemesterID() +
-                " AND " +   COLUMN_COURSE_ID + " = " + course.getCourseID();
+        String query_string =   "DELETE FROM " + COURSE_TABLE +
+                                " WHERE " + COLUMN_USER_ID + "=?" +
+                                " AND " + COLUMN_SEM_ID + "=?" +
+                                " AND " +   COLUMN_COURSE_ID + "=?";
 
-        Cursor cursor = db.rawQuery(query_string, null);
+        Cursor cursor = db.rawQuery(query_string, new String[] {course.getUserID(), course.getSemesterID(), course.getCourseID()});
 
         if(cursor.moveToFirst()) {
             return true;
