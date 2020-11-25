@@ -1,10 +1,9 @@
-package com.example.aplusv2;
+package com.gradeguardians.aplusv2;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,29 +12,27 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-public class viewSemesters extends AppCompatActivity {
+public class viewClasses extends AppCompatActivity {
 
-    SharedPreferences shared_pref;
-    DatabaseHelper db_helper;
-
-    private static final String TAG = "viewSemesters"; //debugging log
+    private static final String TAG = "viewClasses"; //debugging log
 
     // variables (this should come from our user object)
-    private ArrayList<String> mSemesterNames = new ArrayList<>();
-    private ArrayList<String> mSemesterGrades = new ArrayList<>();
-
+    private ArrayList<String> mClassNames = new ArrayList<>();
+    private ArrayList<String> mClassWeights = new ArrayList<>();
+    private ArrayList<String> mClassGrades = new ArrayList<>();
+    List<Course> users_courses;
+    DatabaseHelper db_helper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_semesters);
-
-
+        setContentView(R.layout.activity_view_classes);
         Log.d(TAG, "onCreate:  started");
 
-        db_helper = new DatabaseHelper(viewSemesters.this);
+        db_helper = new DatabaseHelper(viewClasses.this);
 
-        // When this activity is created, list data is initialized
+        users_courses = db_helper.getAllCourses("user", "Semester1");
+
         initArrayListData();
     }
 
@@ -51,22 +48,12 @@ public class viewSemesters extends AppCompatActivity {
     // This function we would update with a function to extract our User's info
     private void initArrayListData(){
         Log.d(TAG, "initArrayListData: prepping array data");
-        shared_pref = viewSemesters.this.getSharedPreferences(getString(R.string.preference_file), MODE_PRIVATE);
 
-        String curr_user = shared_pref.getString(getString(R.string.USER_KEY), "error");
-
-        /* get semesters data from user object by using database helper */
-        List<Semester> sems = db_helper.getAllSemester(curr_user);
-        for(int i = 0 ; i < sems.size() ; i++){
-            String id = sems.get(i).getSemesterID();
-            String gpa = String.valueOf(sems.get(i).getSemesterGPA());
-            mSemesterNames.add(id);
-            mSemesterGrades.add(gpa);
+        for(int i = 0; i < users_courses.size(); i++){
+            mClassNames.add(users_courses.get(i).getCourseID());
+            mClassGrades.add(String.format("%.2f", users_courses.get(i).getCourseGrade()));
+            mClassWeights.add(Integer.toString(users_courses.get(i).getCourseWeight()));
         }
-        mSemesterNames.add("FALL 2020");
-        mSemesterGrades.add("3.0");
-
-
 
         // call this after you get all data
         initRecyclerView();
@@ -77,7 +64,7 @@ public class viewSemesters extends AppCompatActivity {
 
         RecyclerView recyclerView = findViewById(R.id.recyclerv_view);
         // Passing the adapter our info on its construction
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, mSemesterNames, mSemesterGrades);
+        RecyclerViewAdapterClasses adapter = new RecyclerViewAdapterClasses(this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }

@@ -1,4 +1,4 @@
-package com.example.aplusv2;
+package com.gradeguardians.aplusv2;
 
 public class User {
     private String user_id;

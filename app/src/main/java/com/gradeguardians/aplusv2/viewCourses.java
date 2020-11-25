@@ -1,4 +1,4 @@
-package com.example.aplusv2;
+package com.gradeguardians.aplusv2;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -9,6 +9,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
+
+import com.gradeguardians.aplusv2.Course;
+import com.gradeguardians.aplusv2.DatabaseHelper;
+import com.gradeguardians.aplusv2.R;
+import com.gradeguardians.aplusv2.RecyclerViewAdapterClasses;
 
 import java.util.ArrayList;
 import java.util.List;
