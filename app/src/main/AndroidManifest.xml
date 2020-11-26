@@ -11,6 +11,7 @@
         android:theme="@style/Theme.APlusv2">
 
         <activity android:name=".AddCourse"></activity>
+        <activity android:name=".AddSemester"></activity>
         <activity android:name=".Register"></activity>
         <activity android:name=".Login"></activity>
         <activity android:name=".Splashscreen">

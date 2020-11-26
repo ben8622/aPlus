@@ -3,7 +3,6 @@ package com.gradeguardians.aplusv2;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -34,7 +33,7 @@ public class AddCourse extends AppCompatActivity {
 
     public void confirmClicked(View view){
 
-        /* grabbing values and creating couorse object */
+        /* grabbing values and creating course object */
         String course_id = et_course_id.getText().toString();
         double course_grade = Double.parseDouble(et_course_grade.getText().toString());
         int course_weight = Integer.parseInt(et_course_weight.getText().toString());
