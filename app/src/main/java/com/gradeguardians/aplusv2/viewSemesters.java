@@ -81,8 +81,6 @@ public class viewSemesters extends AppCompatActivity {
             mSemesterNames.add(id);
             mSemesterGrades.add(gpa);
         }
-        mSemesterNames.add("FALL 2021");
-        mSemesterGrades.add("3.0");
 
         // call this after you get all data
         initRecyclerView();
