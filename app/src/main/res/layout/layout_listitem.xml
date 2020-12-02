@@ -1,48 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/parent_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10dp"
-    android:id="@+id/parent_layout">
+    android:padding="4dp"
+    android:textAlignment="textStart">
 
-
-    <TextView
-        android:id="@+id/semester_grade"
-        android:layout_width="88dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="21dp"
-        android:layout_marginEnd="5dp"
-        android:layout_toStartOf="@+id/button3"
-        android:layout_toRightOf="@+id/semester_name"
-        android:background="@color/teal_700"
-        android:text="4.30"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="40sp" />
+        android:background="@drawable/round_border"
+        android:gravity="fill_vertical"
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/semester_name"
-        android:layout_width="212dp"
-        android:layout_height="wrap_content"
-        android:background="@color/teal_700"
-        android:ellipsize="none"
-        android:text="Semester1"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="40sp" />
+        <TextView
+            android:id="@+id/semester_name"
+            android:layout_width="212dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:text="Semester1"
+            android:textAlignment="textStart"
+            android:textColor="@color/black"
+            android:textSize="30sp" />
 
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="64dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="0dp"
-        android:backgroundTint="@color/design_default_color_error"
-        android:onClick="delButtonClicked"
-        app:icon="@android:drawable/ic_menu_delete"
-        app:iconTint="@color/white" />
+        <TextView
+            android:id="@+id/semester_grade"
+            android:layout_width="88dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="21dp"
+            android:text="4.30"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="30sp" />
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="53dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="4dp"
+            android:onClick="delButtonClicked"
+            app:icon="@android:drawable/ic_menu_delete"
+            app:iconGravity="textStart"
+            app:iconTint="@color/white" />
+    </LinearLayout>
+
 
 </RelativeLayout>

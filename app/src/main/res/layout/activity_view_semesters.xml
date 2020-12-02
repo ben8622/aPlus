@@ -8,10 +8,15 @@
     tools:context=".viewSemesters">
 
     <!-- the container that will hold our list of semesters -->
+
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerv_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/recyclerv_view"/>
+        android:layout_height="632dp"
+        android:layout_below="@+id/textView3"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="0dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButton"
@@ -24,5 +29,12 @@
         android:clickable="true"
         android:onClick="addButtonClicked"
         app:srcCompat="@android:drawable/ic_menu_add" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:text="Your Semesters" />
+
 
 </RelativeLayout>
