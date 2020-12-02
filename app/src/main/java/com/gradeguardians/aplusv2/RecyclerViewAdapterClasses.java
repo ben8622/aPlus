@@ -1,6 +1,8 @@
 package com.gradeguardians.aplusv2;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,18 +18,26 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class RecyclerViewAdapterClasses extends RecyclerView.Adapter<RecyclerViewAdapterClasses.ViewHolder> {
     private static final String TAG = "RecyclerViewAdapterC";
 
     private List<Course> course_list;
     private Context mContext;
     DatabaseHelper db_helper;
+    SharedPreferences shared_pref;
+    String user_id;
+    String sem_id;
 
     /* default constructor, we get all our data within adapter no need to pass it in */
-    public RecyclerViewAdapterClasses(Context mContext) {
+    public RecyclerViewAdapterClasses(Context mContext, String curr_user, String curr_semester) {
         db_helper = new DatabaseHelper(mContext);
+        shared_pref = PreferenceManager.getDefaultSharedPreferences(mContext);
+        user_id = curr_user;
+        sem_id = curr_semester;
         /* initiate here and onBindViewHolder to avoid trying to get a size from void list */
-        course_list = db_helper.getAllCourses("user", "Semester1");
+        course_list = db_helper.getAllCourses(curr_user, curr_semester);
         this.mContext = mContext;
     }
 
@@ -47,7 +57,7 @@ public class RecyclerViewAdapterClasses extends RecyclerView.Adapter<RecyclerVie
 
         /* update data from database*/
         course_list.clear();
-        course_list = db_helper.getAllCourses("user", "Semester1");
+        course_list = db_helper.getAllCourses(user_id, sem_id);
 
         holder.className.setText(course_list.get(position).getCourseID());
         holder.classGrade.setText(String.format("%.2f", course_list.get(position).getCourseGrade()));

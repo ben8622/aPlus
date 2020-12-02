@@ -17,6 +17,7 @@ public class viewSemesters extends AppCompatActivity {
 
     SharedPreferences shared_pref;
     DatabaseHelper db_helper;
+    String curr_user;
 
     private static final String TAG = "viewSemesters"; //debugging log
 
@@ -34,7 +35,9 @@ public class viewSemesters extends AppCompatActivity {
 
         /* get semesters data from user object by using database helper */
         db_helper = new DatabaseHelper(viewSemesters.this);
-        m_user_semester = db_helper.getAllSemester("user");
+        shared_pref = viewSemesters.this.getSharedPreferences(getString(R.string.preference_file), MODE_PRIVATE);
+        curr_user = shared_pref.getString(getString(R.string.USER_KEY), "error");
+        m_user_semester = db_helper.getAllSemester(curr_user);
 
         // When this activity is created, list data is initialized
         initArrayListData();
@@ -58,7 +61,7 @@ public class viewSemesters extends AppCompatActivity {
        }
 
     public void addButtonClicked(View view) {
-        Toast.makeText(this, "Added", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "|" + curr_user + "|", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, AddSemester.class);
         startActivity(intent);
     }
@@ -77,7 +80,7 @@ public class viewSemesters extends AppCompatActivity {
 
         RecyclerView recyclerView = findViewById(R.id.recyclerv_view);
         // Passing the adapter our info on its construction
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, m_user_semester);
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, m_user_semester, curr_user);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }

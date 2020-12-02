@@ -1,5 +1,7 @@
 package com.gradeguardians.aplusv2;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,11 +14,17 @@ public class AddSemester extends AppCompatActivity {
     Button btn_confirm;
     Semester s;
     DatabaseHelper db_helper;
+    String curr_user;
+    SharedPreferences shared_pref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_semester);
+
+        shared_pref = AddSemester.this.getSharedPreferences(getString(R.string.preference_file), MODE_PRIVATE);
+
+        curr_user = shared_pref.getString(getString(R.string.USER_KEY), "error");
 
         db_helper = new DatabaseHelper(AddSemester.this);
 
@@ -30,7 +38,7 @@ public class AddSemester extends AppCompatActivity {
         /* grabbing values and creating semester object */
         Toast.makeText( AddSemester.this, "Semester test added.", Toast.LENGTH_SHORT).show();
         String course_id = et_course_id.getText().toString();
-        s = new Semester("user", course_id);
+        s = new Semester(curr_user, course_id);
 
         /* adding semester to database and displaying result */
         if(db_helper.addSemester(s)){

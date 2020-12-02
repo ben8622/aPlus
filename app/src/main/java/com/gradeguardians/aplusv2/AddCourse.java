@@ -2,7 +2,9 @@ package com.gradeguardians.aplusv2;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +18,9 @@ public class AddCourse extends AppCompatActivity {
     Button btn_confirm;
     Course c;
     DatabaseHelper db_helper;
+    SharedPreferences shared_pref;
+    String curr_user;
+    String curr_semester;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +28,9 @@ public class AddCourse extends AppCompatActivity {
         setContentView(R.layout.add_class);
 
         db_helper = new DatabaseHelper(AddCourse.this);
+        shared_pref = PreferenceManager.getDefaultSharedPreferences(AddCourse.this);
+        curr_user = shared_pref.getString(getString(R.string.USER_KEY), "error");
+        curr_semester = shared_pref.getString(getString(R.string.SEM_KEY), "error");
 
         et_course_id = findViewById(R.id.et_course_id);
         et_course_grade = findViewById(R.id.et_course_grade);
@@ -37,7 +45,7 @@ public class AddCourse extends AppCompatActivity {
         String course_id = et_course_id.getText().toString();
         double course_grade = Double.parseDouble(et_course_grade.getText().toString());
         int course_weight = Integer.parseInt(et_course_weight.getText().toString());
-        c = new Course("user", "Semester1", course_id, course_weight, course_grade);
+        c = new Course(curr_user, curr_semester, course_id, course_weight, course_grade);
 
         /* adding course to database and displaying result */
         if(db_helper.addCourse(c)){

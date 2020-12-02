@@ -2,6 +2,8 @@ package com.gradeguardians.aplusv2;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +19,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
     // for debugging
     private static final String TAG = "RecyclerViewAdapter";
@@ -30,12 +34,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     List<Semester> mSemesters;
     private Context mContext;
     DatabaseHelper db_helper;
+    SharedPreferences shared_pref;
+    String user_id;
 
     // default constructor
-    public RecyclerViewAdapter(Context mContext, List <Semester> mSemesters) {
-        this.mContext = mContext;
+    public RecyclerViewAdapter(Context mContext, List <Semester> mSemesters, String curr_user) {
         db_helper = new DatabaseHelper(mContext);
-        this.mSemesters = db_helper.getAllSemester("user"); // update so that user comes from shared pref file
+        shared_pref = PreferenceManager.getDefaultSharedPreferences(mContext);
+
+        user_id = shared_pref.getString("username", "error");
+
+        this.mContext = mContext;
+        this.mSemesters = db_helper.getAllSemester(curr_user);
     }
 
     @NonNull
@@ -60,6 +70,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             public void onClick(View view) {
                 Log.d(TAG, "onClick: clocked on: " + mSemesters.get(position).getSemesterID());
 
+                SharedPreferences.Editor prefEditor = shared_pref.edit();
+                try{
+                    prefEditor.putString("semester", mSemesters.get(position).getSemesterID());
+                    prefEditor.apply();
+                }
+                catch (Exception e){
+                    Toast.makeText( mContext, "ERROR in adding user to preferences", Toast.LENGTH_LONG).show();
+                }
                 // For now this will just display a popup of the semester name, but we want it
                 // to eventually bring you to a new activity holding the classes of the semester
                 Toast.makeText(mContext, mSemesters.get(position).getSemesterID(), Toast.LENGTH_SHORT).show();

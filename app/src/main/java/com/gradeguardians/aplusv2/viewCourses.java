@@ -5,7 +5,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -20,9 +22,11 @@ import java.util.List;
 
 public class viewCourses extends AppCompatActivity {
 
-    /* Lists for our RecylclerView */
     List<Course> m_users_courses;
     DatabaseHelper db_helper;
+    SharedPreferences shared_pref;
+    String curr_user;
+    String curr_semester;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +36,10 @@ public class viewCourses extends AppCompatActivity {
         buildRecyclerView();
 
         db_helper = new DatabaseHelper(viewCourses.this);
+
+        shared_pref = PreferenceManager.getDefaultSharedPreferences(viewCourses.this);
+        curr_user = shared_pref.getString("username", "error");
+        curr_semester = shared_pref.getString(getString(R.string.SEM_KEY), "error");
 
         m_users_courses = grabCourses("user", "Semester1");
 
@@ -50,14 +58,9 @@ public class viewCourses extends AppCompatActivity {
         initRecyclerView();
     }
 
-    /* ADD FUNCTIONALITY */
-    public void delButtonClicked(View view) {
-
-
-        Toast.makeText(this, "Deleted", Toast.LENGTH_SHORT).show();
-    }
 
     public void addButtonClicked(View view) {
+        Toast.makeText(this, "|" + curr_user + "||" + curr_semester + "|", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, AddCourse.class);
         startActivity(intent);
     }
@@ -67,7 +70,7 @@ public class viewCourses extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.recyclerv_view);
 
         /* Adapter initialized with out course data */
-        RecyclerViewAdapterClasses adapter = new RecyclerViewAdapterClasses(this);
+        RecyclerViewAdapterClasses adapter = new RecyclerViewAdapterClasses(this, curr_user, curr_semester);
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
