@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -35,7 +36,7 @@ public class viewSemesters extends AppCompatActivity {
 
         /* get semesters data from user object by using database helper */
         db_helper = new DatabaseHelper(viewSemesters.this);
-        shared_pref = viewSemesters.this.getSharedPreferences(getString(R.string.preference_file), MODE_PRIVATE);
+        shared_pref = PreferenceManager.getDefaultSharedPreferences(viewSemesters.this);
         curr_user = shared_pref.getString(getString(R.string.USER_KEY), "error");
         m_user_semester = db_helper.getAllSemester(curr_user);
 

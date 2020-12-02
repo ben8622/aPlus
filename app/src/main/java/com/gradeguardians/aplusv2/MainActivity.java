@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        shared_pref = MainActivity.this.getSharedPreferences(getString(R.string.preference_file), MODE_PRIVATE);
+        shared_pref = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
         tv_title = findViewById(R.id.tv_title);
 
         String curr_user = shared_pref.getString(getString(R.string.USER_KEY), "error");
