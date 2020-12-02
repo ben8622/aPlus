@@ -14,7 +14,4 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="delButton">
-        <item name="colorPrimary">@color/red</item>
-    </style>
 </resources>

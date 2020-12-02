@@ -35,7 +35,7 @@
         android:textSize="40sp" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/btn_del"
         android:layout_width="64dp"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
