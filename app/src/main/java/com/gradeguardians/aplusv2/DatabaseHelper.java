@@ -231,6 +231,35 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
         return all_users;
     }
+    public User grabOneUser(String user_id){
+        User u;
+
+        String query_string ="SELECT * FROM " + USER_TABLE;
+
+        SQLiteDatabase db =this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(query_string, null);
+
+        if(cursor.moveToFirst()){
+            do{
+                String username = cursor.getString(0);
+                if(username.equals(user_id)){
+                    String password = cursor.getString(1);
+                    String cumGPA = cursor.getString(2);
+                    double d_cumGPA = Double.parseDouble(cumGPA);
+
+                    u = new User(username, password, d_cumGPA);
+
+                    cursor.close();
+                    db.close();
+                    return u;
+                }
+
+
+            }while(cursor.moveToNext());
+        }
+        return null;
+    }
     public List<Semester> getAllSemester(String user_id){
         /* a user_id is passed in this function to only retrieve the semesters from the specified user */
         List<Semester> all_sems = new ArrayList<>();

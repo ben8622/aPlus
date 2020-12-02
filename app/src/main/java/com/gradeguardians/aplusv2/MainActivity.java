@@ -13,8 +13,10 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
 
     SharedPreferences shared_pref;
-    TextView tv_title;
+    DatabaseHelper db_helper;
+    TextView tv_title, tv_cumGPA;
     String curr_user;
+    User u;
 
 
     @Override
@@ -23,11 +25,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         shared_pref = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+        db_helper = new DatabaseHelper(MainActivity.this);
         tv_title = findViewById(R.id.tv_title);
+        tv_cumGPA = findViewById(R.id.tv_cumGPA);
 
         curr_user = shared_pref.getString(getString(R.string.USER_KEY), "error");
+        u = db_helper.grabOneUser(curr_user);
 
-        tv_title.setText(curr_user);
+        tv_title.setText(u.getUserID());
+        tv_cumGPA.setText(u.getGPA());
+
     }
 
     public void showNeededGPA(View view) {

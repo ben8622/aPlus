@@ -10,6 +10,11 @@ public class User {
         this.pass = pass;
         cumGPA = 0.0;
     }
+    public User(String user_id, String pass, double cumGPA) {
+        this.user_id = user_id;
+        this.pass = pass;
+        this.cumGPA = cumGPA;
+    }
 
     public boolean authUser(String pass) {
         if(pass == pass){
@@ -22,5 +27,6 @@ public class User {
 
     public String getUserID(){ return user_id; }
     public String getPass(){ return pass; }
+    public String getGPA(){ return Double.toString(cumGPA);}
 }
 
