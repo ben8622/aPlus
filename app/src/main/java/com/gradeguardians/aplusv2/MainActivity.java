@@ -14,6 +14,7 @@ public class MainActivity extends AppCompatActivity {
 
     SharedPreferences shared_pref;
     TextView tv_title;
+    String curr_user;
 
 
     @Override
@@ -24,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         shared_pref = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
         tv_title = findViewById(R.id.tv_title);
 
-        String curr_user = shared_pref.getString(getString(R.string.USER_KEY), "error");
+        curr_user = shared_pref.getString(getString(R.string.USER_KEY), "error");
 
         tv_title.setText(curr_user);
     }

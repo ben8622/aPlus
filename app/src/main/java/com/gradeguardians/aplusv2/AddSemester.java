@@ -3,6 +3,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,7 +23,7 @@ public class AddSemester extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_semester);
 
-        shared_pref = AddSemester.this.getSharedPreferences(getString(R.string.preference_file), MODE_PRIVATE);
+        shared_pref = PreferenceManager.getDefaultSharedPreferences(AddSemester.this);
 
         curr_user = shared_pref.getString(getString(R.string.USER_KEY), "error");
 
