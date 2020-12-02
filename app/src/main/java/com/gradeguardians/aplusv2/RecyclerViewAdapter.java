@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
     // for debugging
@@ -25,15 +27,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     declaring users and their passwords, and then individual text files holding their data
     for each one.
      */
-    private ArrayList<String> mSemesterNames = new ArrayList<>();
-    private ArrayList<String> mSemesterGrades = new ArrayList<>();
+    List<Semester> mSemesters;
     private Context mContext;
+    DatabaseHelper db_helper;
 
     // default constructor
-    public RecyclerViewAdapter(Context mContext, ArrayList<String> mSemesterNames, ArrayList<String> mSemesterGrades) {
-        this.mSemesterNames = mSemesterNames;
-        this.mSemesterGrades = mSemesterGrades;
+    public RecyclerViewAdapter(Context mContext, List <Semester> mSemesters) {
         this.mContext = mContext;
+        db_helper = new DatabaseHelper(mContext);
+        this.mSemesters = db_helper.getAllSemester("user"); // update so that user comes from shared pref file
     }
 
     @NonNull
@@ -50,19 +52,53 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Log.d(TAG, "onBindViewHolder: called."); //prints out to log every time item put in (debugging)
 
-        holder.semesterName.setText(mSemesterNames.get(position));
-        holder.semesterGrade.setText(mSemesterGrades.get(position));
+        holder.semesterName.setText(mSemesters.get(position).getSemesterID());
+        holder.semesterGrade.setText(Double.toString(mSemesters.get(position).getSemesterGPA()));
 
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(TAG, "onClick: clocked on: " + mSemesterNames.get(position));
+                Log.d(TAG, "onClick: clocked on: " + mSemesters.get(position).getSemesterID());
 
                 // For now this will just display a popup of the semester name, but we want it
                 // to eventually bring you to a new activity holding the classes of the semester
-                Toast.makeText(mContext, mSemesterNames.get(position), Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, mSemesters.get(position).getSemesterID(), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(mContext, viewCourses.class);
                 mContext.startActivity(intent);
+            }
+        });
+        holder.btn_del.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG, "onClick: clocked on: " + mSemesters.get(position).getSemesterID());
+
+                String user_id = "user"; //grab from shared_prefs
+                String sem_id = mSemesters.get(position).getSemesterID();
+
+                Semester s = new Semester(user_id, sem_id, 0);
+
+                /* this is to avoid accessing index that is out of bounds */
+                if (position == mSemesters.size() - 1) { // if last element is deleted, no need to shift
+                    mSemesters.remove(position);
+                    db_helper.deleteSemester(s);
+                    notifyItemRemoved(position);
+                } else { // if the element deleted is not the last one
+                    int shift=1; // not zero, shift=0 is the case where position == dataList.size() - 1, which is already checked above
+                    while (true) {
+                        try {
+                            mSemesters.remove(position-shift);
+                            db_helper.deleteSemester(s);
+                            notifyItemRemoved(position);
+                            break;
+                        } catch (IndexOutOfBoundsException e) { // if fails, increment the shift and try again
+                            shift++;
+                        }
+                    }
+                }
+
+                Toast.makeText(mContext, "Deleted", Toast.LENGTH_SHORT).show();
+
+
             }
         });
 
@@ -71,7 +107,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public int getItemCount() {
         // tells the adapter how many list items are there, if it was zero nothing would show up
-        return mSemesterNames.size();
+        return mSemesters.size();
     }
 
     // Hold the views in memeory
@@ -80,6 +116,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         TextView semesterName;
         TextView semesterGrade;
         RelativeLayout parentLayout; // we need this to attach the onclick listener
+        Button btn_del;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -88,6 +125,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
              semesterName = itemView.findViewById(R.id.semester_name);
              semesterGrade = itemView.findViewById(R.id.semester_grade);
              parentLayout = itemView.findViewById(R.id.parent_layout);
+             btn_del = itemView.findViewById(R.id.btn_del);
         }
     }
+    
 }

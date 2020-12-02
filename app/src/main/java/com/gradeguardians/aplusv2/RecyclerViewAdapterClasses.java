@@ -53,40 +53,40 @@ public class RecyclerViewAdapterClasses extends RecyclerView.Adapter<RecyclerVie
         holder.classGrade.setText(String.format("%.2f", course_list.get(position).getCourseGrade()));
         holder.classWeight.setText(Integer.toString(course_list.get(position).getCourseWeight()));
 
-        holder.btn_del.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d(TAG, "onClick: clocked on: " + course_list.get(position).getCourseID());
+                holder.btn_del.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Log.d(TAG, "onClick: clocked on: " + course_list.get(position).getCourseID());
 
-                String user_id = "user"; //grab from shared_prefs
-                String sem_id = "Semester1"; //grab from shared_prefs
-                String course_id = course_list.get(position).getCourseID();
+                        String user_id = "user"; //grab from shared_prefs
+                        String sem_id = "Semester1"; //grab from shared_prefs
+                        String course_id = course_list.get(position).getCourseID();
 
-                Course c = new Course(user_id, sem_id, course_id, 0, 0.0);
+                        Course c = new Course(user_id, sem_id, course_id, 0, 0.0);
 
-                /* this is to avoid accessing index that is out of bounds */
-                if (position == course_list.size() - 1) { // if last element is deleted, no need to shift
-                    course_list.remove(position);
-                    db_helper.deleteCourse(c);
-                    notifyItemRemoved(position);
-                } else { // if the element deleted is not the last one
-                    int shift=1; // not zero, shift=0 is the case where position == dataList.size() - 1, which is already checked above
-                    while (true) {
-                        try {
-                            course_list.remove(position-shift);
+                        /* this is to avoid accessing index that is out of bounds */
+                        if (position == course_list.size() - 1) { // if last element is deleted, no need to shift
+                            course_list.remove(position);
                             db_helper.deleteCourse(c);
                             notifyItemRemoved(position);
-                            break;
-                        } catch (IndexOutOfBoundsException e) { // if fails, increment the shift and try again
-                            shift++;
+                        } else { // if the element deleted is not the last one
+                            int shift=1; // not zero, shift=0 is the case where position == dataList.size() - 1, which is already checked above
+                            while (true) {
+                                try {
+                                    course_list.remove(position-shift);
+                                    db_helper.deleteCourse(c);
+                                    notifyItemRemoved(position);
+                                    break;
+                                } catch (IndexOutOfBoundsException e) { // if fails, increment the shift and try again
+                                    shift++;
+                                }
+                            }
                         }
+
+                        Toast.makeText(mContext, "Deleted", Toast.LENGTH_SHORT).show();
+
+
                     }
-                }
-
-                Toast.makeText(mContext, "Deleted", Toast.LENGTH_SHORT).show();
-
-
-            }
         });
 
     }

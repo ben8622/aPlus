@@ -21,16 +21,12 @@ public class viewSemesters extends AppCompatActivity {
     private static final String TAG = "viewSemesters"; //debugging log
 
     // variables (this should come from our user object)
-    private ArrayList<String> mSemesterNames = new ArrayList<>();
-    private ArrayList<String> mSemesterGrades = new ArrayList<>();
     List<Semester> m_user_semester;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_semesters);
-
-        buildRecyclerView();
 
         Log.d(TAG, "onCreate:  started");
 
@@ -44,12 +40,13 @@ public class viewSemesters extends AppCompatActivity {
         initArrayListData();
     }
 
+    @Override
     protected void onRestart(){
         super.onRestart();
 
         m_user_semester.clear();
-        m_user_semester = grabSemester("user");
-        //m_user_semester = db_helper.getAllSemester("user");
+
+        m_user_semester = db_helper.getAllSemester("user");
 
         initRecyclerView();
     }
@@ -71,17 +68,6 @@ public class viewSemesters extends AppCompatActivity {
         Log.d(TAG, "initArrayListData: prepping array data");
         shared_pref = viewSemesters.this.getSharedPreferences(getString(R.string.preference_file), MODE_PRIVATE);
 
-        //String curr_user = shared_pref.getString(getString(R.string.USER_KEY), "error");
-
-        /* get semesters data from user object by using database helper */
-        //user_sems = db_helper.getAllSemester("user");
-        for(int i = 0 ; i < m_user_semester.size() ; i++){
-            String id = m_user_semester.get(i).getSemesterID();
-           String gpa = String.valueOf(m_user_semester.get(i).getSemesterGPA());
-            mSemesterNames.add(id);
-            mSemesterGrades.add(gpa);
-        }
-
         // call this after you get all data
         initRecyclerView();
     }
@@ -91,7 +77,7 @@ public class viewSemesters extends AppCompatActivity {
 
         RecyclerView recyclerView = findViewById(R.id.recyclerv_view);
         // Passing the adapter our info on its construction
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, mSemesterNames, mSemesterGrades);
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, m_user_semester);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
@@ -99,8 +85,5 @@ public class viewSemesters extends AppCompatActivity {
     public List<Semester> grabSemester(String user_id){
         List<Semester> tmp = db_helper.getAllSemester(user_id);
         return tmp;
-    }
-
-    private void buildRecyclerView() {
     }
 }

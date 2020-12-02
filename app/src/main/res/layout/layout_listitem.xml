@@ -46,5 +46,4 @@
             app:iconTint="@color/white" />
     </LinearLayout>
 
-
 </RelativeLayout>
