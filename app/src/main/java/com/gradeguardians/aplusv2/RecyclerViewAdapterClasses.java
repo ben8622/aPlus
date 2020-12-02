@@ -27,15 +27,15 @@ public class RecyclerViewAdapterClasses extends RecyclerView.Adapter<RecyclerVie
     private Context mContext;
     DatabaseHelper db_helper;
     SharedPreferences shared_pref;
-    String user_id;
-    String sem_id;
+    String curr_user;
+    String curr_sem;
 
     /* default constructor, we get all our data within adapter no need to pass it in */
     public RecyclerViewAdapterClasses(Context mContext, String curr_user, String curr_semester) {
         db_helper = new DatabaseHelper(mContext);
         shared_pref = PreferenceManager.getDefaultSharedPreferences(mContext);
-        user_id = curr_user;
-        sem_id = curr_semester;
+        this.curr_user = curr_user;
+        this.curr_sem = curr_semester;
         /* initiate here and onBindViewHolder to avoid trying to get a size from void list */
         course_list = db_helper.getAllCourses(curr_user, curr_semester);
         this.mContext = mContext;
@@ -57,7 +57,7 @@ public class RecyclerViewAdapterClasses extends RecyclerView.Adapter<RecyclerVie
 
         /* update data from database*/
         course_list.clear();
-        course_list = db_helper.getAllCourses(user_id, sem_id);
+        course_list = db_helper.getAllCourses(curr_user, curr_sem);
 
         holder.className.setText(course_list.get(position).getCourseID());
         holder.classGrade.setText(String.format("%.2f", course_list.get(position).getCourseGrade()));
@@ -68,8 +68,8 @@ public class RecyclerViewAdapterClasses extends RecyclerView.Adapter<RecyclerVie
                     public void onClick(View view) {
                         Log.d(TAG, "onClick: clocked on: " + course_list.get(position).getCourseID());
 
-                        String user_id = "user"; //grab from shared_prefs
-                        String sem_id = "Semester1"; //grab from shared_prefs
+                        String user_id = curr_user; //grab from shared_prefs
+                        String sem_id = curr_sem; //grab from shared_prefs
                         String course_id = course_list.get(position).getCourseID();
 
                         Course c = new Course(user_id, sem_id, course_id, 0, 0.0);
