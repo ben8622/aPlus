@@ -40,6 +40,9 @@ public class viewSemesters extends AppCompatActivity {
         curr_user = shared_pref.getString(getString(R.string.USER_KEY), "error");
         m_user_semester = db_helper.getAllSemester(curr_user);
 
+        db_helper.calcCumGPA(curr_user);
+
+
         // When this activity is created, list data is initialized
         initArrayListData();
     }
@@ -48,11 +51,19 @@ public class viewSemesters extends AppCompatActivity {
     protected void onRestart(){
         super.onRestart();
 
+        db_helper.calcCumGPA(curr_user);
+
         m_user_semester.clear();
 
         m_user_semester = db_helper.getAllSemester("user");
 
         initRecyclerView();
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        db_helper.calcCumGPA(curr_user);
     }
 
 

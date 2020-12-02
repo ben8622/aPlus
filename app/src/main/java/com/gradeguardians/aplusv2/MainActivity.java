@@ -36,6 +36,24 @@ public class MainActivity extends AppCompatActivity {
         tv_cumGPA.setText(u.getGPA());
 
     }
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+
+        /* update cumGPA on return from other viewSemester (what if things were added or deleted */
+        db_helper.calcCumGPA(curr_user);
+        u = db_helper.grabOneUser(curr_user);
+        tv_cumGPA.setText(u.getGPA());
+    }
+    @Override
+    protected void onResume(){
+        super.onResume();
+
+        db_helper.calcCumGPA(curr_user);
+        u = db_helper.grabOneUser(curr_user);
+        tv_cumGPA.setText(u.getGPA());
+
+    }
 
     public void showNeededGPA(View view) {
 

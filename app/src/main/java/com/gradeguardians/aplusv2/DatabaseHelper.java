@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -326,7 +327,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return all_courses;
     }
 
-    public double calcCumGPA(String user_id){
+    public void editUserGPA(String user_id, double GPA){
+        String s_GPA = Double.toString(GPA);
+
+        String query_string =   "UPDATE " + USER_TABLE +
+                                " SET " + COLUMN_CUMGPA + "=?" +
+                                " WHERE " + COLUMN_USER_ID + "=?";
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL(query_string, new String[] {s_GPA, user_id});
+    }
+
+    public void calcCumGPA(String user_id){
         List<Semester> all_sems = this.getAllSemester(user_id);
         int sum = 0 ;
         int total_credits = 0;
@@ -348,7 +360,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
             }
         }
-        return (sum)/total_credits;
+        if(total_credits != 0){
+            editUserGPA(user_id, sum/total_credits);
+        }
+        else{
+            editUserGPA(user_id, 0);
+        }
+
     }
 
     public double calcSemGpa(String user_id, String sem_id){
@@ -371,6 +389,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             }
 
         }
+
         return sum/sem_credits;
     }
 
