@@ -351,4 +351,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return (sum)/total_credits;
     }
 
+    public double calcSemGpa(String user_id, String sem_id){
+        int sum = 0 ;
+        int sem_credits = 0 ;
+        List<Course> sem_courses = this.getAllCourses(user_id,sem_id);
+
+        for(Course course: sem_courses){
+            String grade = course.getCourseLetterGrade();
+            int weight = course.getCourseWeight();
+            sem_credits += weight;
+            if (grade == "A") {
+                sum += (4 * weight);
+            } else if (grade == "B") {
+                sum += (3 * weight);
+            } else if (grade == "C") {
+                sum += (2 * weight);
+            } else if (grade == "D") {
+                sum += (1 * weight);
+            }
+
+        }
+        return sum/sem_credits;
+    }
+
 }
