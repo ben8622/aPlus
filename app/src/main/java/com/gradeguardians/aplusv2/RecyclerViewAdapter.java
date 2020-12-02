@@ -43,9 +43,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         shared_pref = PreferenceManager.getDefaultSharedPreferences(mContext);
 
         user_id = shared_pref.getString("username", "error");
+        user_id = curr_user;
 
         this.mContext = mContext;
-        this.mSemesters = db_helper.getAllSemester(curr_user);
+        this.mSemesters = db_helper.getAllSemester(user_id);
     }
 
     @NonNull

@@ -46,8 +46,9 @@ public class Login extends AppCompatActivity {
 
     public void onLogin(User u){
         SharedPreferences.Editor prefEditor = shared_pref.edit();
+        Toast.makeText( Login.this, "User |" + u.getUserID() + "|", Toast.LENGTH_SHORT).show();
         try{
-            prefEditor.putString(getString(R.string.USER_KEY), u.getUserID());
+            prefEditor.putString("username", u.getUserID());
             prefEditor.apply();
         }
         catch (Exception e){
