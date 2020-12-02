@@ -297,4 +297,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return all_courses;
     }
 
+    public double calcCumGPA(String user_id){
+        List<Semester> all_sems = this.getAllSemester(user_id);
+        int sum = 0 ;
+        int total_credits = 0;
+        for(Semester sem : all_sems) {
+            List<Course> sem_courses = this.getAllCourses(user_id, sem.getSemesterID());
+            for (Course course : sem_courses) {
+                String grade = course.getCourseLetterGrade();
+                int weight = course.getCourseWeight();
+                total_credits += weight;
+                if (grade == "A") {
+                    sum += (4 * weight);
+                } else if (grade == "B") {
+                    sum += (3 * weight);
+                } else if (grade == "C") {
+                    sum += (2 * weight);
+                } else if (grade == "D") {
+                    sum += (1 * weight);
+                }
+
+            }
+        }
+        return (sum)/total_credits;
+    }
+
 }
