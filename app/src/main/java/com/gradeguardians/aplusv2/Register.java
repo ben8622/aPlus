@@ -25,16 +25,18 @@ public class Register extends AppCompatActivity {
     public void registerClicked(View view){
         try{
 
+            /* grab values for our new user */
             String username = et_username.getText().toString();
             String password = et_password.getText().toString();
             User u = new User(username, password);
 
+            /* store in database */
             db_helper = new DatabaseHelper(Register.this);
-
             db_helper.addUser(u);
 
             Toast.makeText( Register.this, "Added User succesfully.", Toast.LENGTH_SHORT).show();
         }
+        /* database usernames are unique, if duplicate, it will throw error */
         catch (Exception e) {
             Toast.makeText( Register.this, "USERNAME ALREADY EXISTS: " + e.toString(), Toast.LENGTH_SHORT).show();
         }

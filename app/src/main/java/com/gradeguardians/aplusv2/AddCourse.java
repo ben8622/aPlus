@@ -16,9 +16,12 @@ public class AddCourse extends AppCompatActivity {
 
     EditText et_course_id, et_course_grade, et_course_weight;
     Button btn_confirm;
+
     Course c;
+
     DatabaseHelper db_helper;
     SharedPreferences shared_pref;
+
     String curr_user;
     String curr_semester;
 
@@ -29,6 +32,7 @@ public class AddCourse extends AppCompatActivity {
 
         db_helper = new DatabaseHelper(AddCourse.this);
         shared_pref = PreferenceManager.getDefaultSharedPreferences(AddCourse.this);
+
         curr_user = shared_pref.getString(getString(R.string.USER_KEY), "error");
         curr_semester = shared_pref.getString(getString(R.string.SEM_KEY), "error");
 
@@ -68,6 +72,5 @@ public class AddCourse extends AppCompatActivity {
             Toast.makeText( AddCourse.this, "ERROR: Adding course failed.", Toast.LENGTH_SHORT).show();
             finish();
         }
-
     }
 }

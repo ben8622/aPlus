@@ -12,8 +12,8 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerv_view"
         android:layout_width="match_parent"
-        android:layout_height="632dp"
-        android:layout_below="@+id/textView3"
+        android:layout_height="667dp"
+        android:layout_below="@+id/tv_title"
         android:layout_alignParentBottom="true"
         android:layout_marginTop="0dp"
         android:layout_marginBottom="0dp" />
@@ -31,10 +31,13 @@
         app:srcCompat="@android:drawable/ic_menu_add" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/tv_semester"
         android:layout_width="match_parent"
-        android:layout_height="46dp"
-        android:text="Your Semesters" />
+        android:layout_height="wrap_content"
+        android:background="#488CC4"
+        android:textAlignment="textStart"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textColor="#FFFFFF" />
 
 
 </RelativeLayout>

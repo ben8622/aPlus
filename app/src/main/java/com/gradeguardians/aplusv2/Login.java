@@ -14,16 +14,12 @@ import android.widget.Toast;
 import java.util.List;
 
 public class Login extends AppCompatActivity {
+
     Button btn_login, btn_register;
     EditText et_username, et_password;
+
     DatabaseHelper db_helper;
-
     SharedPreferences shared_pref;
-    private final String USER_KEY = "username";
-
-    User dummy_user = new User("user", "password");
-    Semester dummy_semester = new Semester(dummy_user.getUserID(), "Semester1");
-    Course dummy_course = new Course(dummy_user.getUserID(), dummy_semester.getSemesterID(), "1101CLASS", 4, 88.3);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,15 +31,12 @@ public class Login extends AppCompatActivity {
         et_username = findViewById(R.id.et_username);
         et_password = findViewById(R.id.et_password);
 
-       shared_pref = PreferenceManager.getDefaultSharedPreferences(Login.this);
+        shared_pref = PreferenceManager.getDefaultSharedPreferences(Login.this);
 
         db_helper = new DatabaseHelper(Login.this);
-
-
-
-
     }
 
+    /* succesful login, update username key */
     public void onLogin(User u){
         SharedPreferences.Editor prefEditor = shared_pref.edit();
         Toast.makeText( Login.this, "User |" + u.getUserID() + "|", Toast.LENGTH_SHORT).show();
@@ -60,25 +53,18 @@ public class Login extends AppCompatActivity {
     public void registerClicked(View view){
         Intent intent = new Intent(this, Register.class);
         startActivity(intent);
-
     }
 
     public void loginClicked(View view){
 
         db_helper = new DatabaseHelper(Login.this);
 
-        /* grabs text from input fields */
         String username = et_username.getText().toString();
         String password = et_password.getText().toString();
 
-        /*
-        for(int i =0; i < 3; i++){
-            db_helper.addCourse(dummy_course);
-        }
-        */
-
         List<User> user_list = db_helper.getAllUsers();
 
+        /* check username and pass against database */
         for(int i = 0; i < user_list.size(); i++){
             if(username.equals(user_list.get(i).getUserID()) && password.equals(user_list.get(i).getPass())){
                 onLogin(user_list.get(i));
@@ -88,6 +74,7 @@ public class Login extends AppCompatActivity {
                 return;
             }
         }
+        /* no match */
         String error = "Invalid username and password.";
         Toast.makeText( Login.this, error, Toast.LENGTH_SHORT).show();
     }

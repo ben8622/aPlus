@@ -8,10 +8,13 @@
     tools:context=".viewSemesters">
 
     <!-- the container that will hold our list of semesters -->
+
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerv_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/recyclerv_view"/>
+        android:layout_height="697dp"
+        android:layout_below="@+id/tv_title"
+        android:layout_marginTop="2dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButton2"
@@ -24,5 +27,19 @@
         android:clickable="true"
         android:onClick="addButtonClicked"
         app:srcCompat="@android:drawable/ic_menu_add" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="148dp"
+        android:layout_height="44dp"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/tv_title2"
+        android:layout_width="148dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="1dp"
+        android:layout_toEndOf="@+id/tv_title"
+        android:text="TextView" />
 
 </RelativeLayout>
