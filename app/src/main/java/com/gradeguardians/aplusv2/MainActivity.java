@@ -42,33 +42,23 @@ public class MainActivity extends AppCompatActivity {
         curr_user = shared_pref.getString(getString(R.string.USER_KEY), "error");
         u = db_helper.grabOneUser(curr_user);
 
-        tv_title.setText(u.getUserID());
-        tv_cumGPA.setText(u.getGPA());
-        tv_targetGPA.setText(String.format("%.2f", 0.0));
+        tv_targetGPA.setText("0.0");
+
+        updateViews();
 
     }
     @Override
     protected void onRestart() {
         super.onRestart();
 
-        /* update cumGPA on return from other viewSemester (what if things were added or deleted */
-        db_helper.calcCumGPA(curr_user);
-        u = db_helper.grabOneUser(curr_user);
-        tv_cumGPA.setText(u.getGPA());
+        updateViews();
     }
     @Override
     protected void onResume(){
         super.onResume();
 
-        db_helper.calcCumGPA(curr_user);
-        u = db_helper.grabOneUser(curr_user);
-        tv_cumGPA.setText(u.getGPA());
+        updateViews();
 
-    }
-
-    public void showNeededGPA(View view) {
-
-        Toast.makeText(this, "Target GPA Shown", Toast.LENGTH_SHORT).show();
     }
 
     public void viewSemesters(View view){
@@ -80,8 +70,9 @@ public class MainActivity extends AppCompatActivity {
         double target = Double.parseDouble(et_targetGPA.getText().toString());
 
         /* avoid extra computation if the input is wrong */
-        if(target < 0 || target > 4.0){
+        if(target < 0.0 || target > 4.0){
             et_targetGPA.setError("Invalid target GPA");
+            return;
         }
 
         double total_sems = db_helper.getAllSemester(curr_user).size();
@@ -91,10 +82,18 @@ public class MainActivity extends AppCompatActivity {
 
         if(needed_gpa < 0.0 || needed_gpa > 4.0){
             et_targetGPA.setError("That's impossible for you this semester!");
+            return;
         }
         else{
             tv_targetGPA.setText(String.format("%.2f", needed_gpa));
         }
     }
 
+    /* updates values for views */
+    public void updateViews(){
+        tv_title.setText(curr_user + "'s Homepage");
+        db_helper.calcCumGPA(curr_user);
+        u = db_helper.grabOneUser(curr_user);
+        tv_cumGPA.setText(u.getGPA());
+    }
 }

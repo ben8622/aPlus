@@ -22,9 +22,9 @@ import java.util.List;
 
 public class viewCourses extends AppCompatActivity {
 
-    List<Course> m_users_courses;
     DatabaseHelper db_helper;
     SharedPreferences shared_pref;
+
     String curr_user;
     String curr_semester;
 
@@ -33,44 +33,32 @@ public class viewCourses extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_classes);
 
-        buildRecyclerView();
 
         db_helper = new DatabaseHelper(viewCourses.this);
-
         shared_pref = PreferenceManager.getDefaultSharedPreferences(viewCourses.this);
+
         curr_user = shared_pref.getString("username", "error");
         curr_semester = shared_pref.getString(getString(R.string.SEM_KEY), "error");
 
+        /* make sure semester's gpa always up to date */
         db_helper.calcSemGpa(curr_user, curr_semester);
-
-        m_users_courses = grabCourses("user", "Semester1");
 
         /* Called from onCreate and onRestart to always have an updated list */
         initRecyclerView();
     }
-
     @Override
     protected void onRestart(){
         super.onRestart();
-
-        /* reset list that RecyclerView is displaying */
-        m_users_courses.clear();
-        m_users_courses = grabCourses(curr_user, curr_semester);
-
         db_helper.calcSemGpa(curr_user, curr_semester);
-
         initRecyclerView();
     }
 
-
     public void addButtonClicked(View view) {
-        Toast.makeText(this, "|" + curr_user + "||" + curr_semester + "|", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, AddCourse.class);
         startActivity(intent);
     }
 
     private void initRecyclerView(){
-
         RecyclerView recyclerView = findViewById(R.id.recyclerv_view);
 
         /* Adapter initialized with out course data */
@@ -80,11 +68,4 @@ public class viewCourses extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
-    /* grab user_id and semester_id from shared_pref file */
-    public List<Course> grabCourses(String user_id, String semester_id){
-        List<Course> tmp = db_helper.getAllCourses(user_id, semester_id);
-        return tmp;
-    }
-
-    public void buildRecyclerView(){}
 }
