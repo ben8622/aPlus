@@ -51,55 +51,46 @@ public class RecyclerViewAdapterClasses extends RecyclerView.Adapter<RecyclerVie
     }
 
     @Override
-    /* important method that will change based on your layout and what you want them to look like */
+    /* creates list item for each course belonging to keyed semester */
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Log.d(TAG, "onBindViewHolder: called."); //prints out to log every time item put in (debugging)
 
-        /* update data from database*/
+        /* update data from database for safe measure*/
         course_list.clear();
         course_list = db_helper.getAllCourses(curr_user, curr_sem);
-
         holder.className.setText(course_list.get(position).getCourseID());
         holder.classGrade.setText(String.format("%.2f", course_list.get(position).getCourseGrade()));
         holder.classWeight.setText(Integer.toString(course_list.get(position).getCourseWeight()));
+        /* onclick listener for our delete buttons */
+        holder.btn_del.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Course c = new Course(course_list.get(position).getUserID(),
+                                      course_list.get(position).getSemesterID(),
+                                      course_list.get(position).getCourseID(), 0, 0.0);
 
-                holder.btn_del.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Log.d(TAG, "onClick: clocked on: " + course_list.get(position).getCourseID());
-
-                        String user_id = curr_user; //grab from shared_prefs
-                        String sem_id = curr_sem; //grab from shared_prefs
-                        String course_id = course_list.get(position).getCourseID();
-
-                        Course c = new Course(course_list.get(position).getUserID(),
-                                              course_list.get(position).getSemesterID(),
-                                              course_list.get(position).getCourseID(), 0, 0.0);
-
-                        /* this is to avoid accessing index that is out of bounds */
-                        if (position == course_list.size() - 1 || position == 0 ) { // if last element is deleted, no need to shift
-                            course_list.remove(position);
+                /* this is to avoid accessing index that is out of bounds */
+                if (position == course_list.size() - 1 || position == 0 ) {
+                    course_list.remove(position);
+                    db_helper.deleteCourse(c);
+                    notifyItemRemoved(position);
+                }
+                else {
+                    int shift=1;
+                    while (true) {
+                        try {
+                            course_list.remove(position-shift);
                             db_helper.deleteCourse(c);
                             notifyItemRemoved(position);
-                        } else { // if the element deleted is not the last one
-                            int shift=1; // not zero, shift=0 is the case where position == dataList.size() - 1, which is already checked above
-                            while (true) {
-                                try {
-                                    course_list.remove(position-shift);
-                                    db_helper.deleteCourse(c);
-                                    notifyItemRemoved(position);
-                                    break;
-                                } catch (IndexOutOfBoundsException e) { // if fails, increment the shift and try again
-                                    shift++;
-                                }
-                            }
+                            break;
                         }
-
-                        Toast.makeText(mContext, "Deleted", Toast.LENGTH_SHORT).show();
-
-
+                        catch (IndexOutOfBoundsException e) {
+                            shift++;
+                        }
                     }
-        });
+                }
+                Toast.makeText(mContext, "Deleted", Toast.LENGTH_SHORT).show();
+            }
+});
 
     }
 

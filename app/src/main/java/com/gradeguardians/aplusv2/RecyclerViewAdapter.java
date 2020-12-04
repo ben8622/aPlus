@@ -59,9 +59,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     @Override
-    // important method that will change based on your layout and what you want them to look like
+    /* creates  list item in recyclerview for each semester user has in database */
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Log.d(TAG, "onBindViewHolder: called."); //prints out to log every time item put in (debugging)
 
         holder.semesterName.setText(mSemesters.get(position).getSemesterID());
         holder.semesterGrade.setText(String.format("%.2f", mSemesters.get(position).getSemesterGPA()));

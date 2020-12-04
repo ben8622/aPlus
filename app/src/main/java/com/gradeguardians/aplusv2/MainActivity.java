@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         et_targetGPA = findViewById(R.id.et_targetGPA);
         btn_targetGPA = findViewById(R.id.btn_targetGPA);
 
+        /* create user that logged in */
         curr_user = shared_pref.getString(getString(R.string.USER_KEY), "error");
         u = db_helper.grabOneUser(curr_user);
 
@@ -46,6 +47,13 @@ public class MainActivity extends AppCompatActivity {
 
         updateViews();
 
+    }
+    /* updates values for views */
+    public void updateViews(){
+        tv_title.setText(curr_user + "'s Homepage");
+        db_helper.calcCumGPA(curr_user);
+        u = db_helper.grabOneUser(curr_user);
+        tv_cumGPA.setText(u.getGPA());
     }
     @Override
     protected void onRestart() {
@@ -94,11 +102,5 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    /* updates values for views */
-    public void updateViews(){
-        tv_title.setText(curr_user + "'s Homepage");
-        db_helper.calcCumGPA(curr_user);
-        u = db_helper.grabOneUser(curr_user);
-        tv_cumGPA.setText(u.getGPA());
-    }
+
 }
