@@ -12,8 +12,8 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerv_view"
         android:layout_width="match_parent"
-        android:layout_height="667dp"
-        android:layout_below="@+id/tv_title"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/topbar"
         android:layout_alignParentBottom="true"
         android:layout_marginTop="0dp"
         android:layout_marginBottom="0dp" />
@@ -30,14 +30,33 @@
         android:onClick="addButtonClicked"
         app:srcCompat="@android:drawable/ic_menu_add" />
 
-    <TextView
-        android:id="@+id/tv_semester"
+    <LinearLayout
+        android:id="@+id/topbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#488CC4"
-        android:textAlignment="textStart"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        android:textColor="#FFFFFF" />
+        android:gravity="fill_vertical"
+        android:orientation="horizontal">
 
+        <TextView
+            android:id="@+id/semester_name"
+            android:layout_width="227dp"
+            android:layout_height="wrap_content"
+            android:text="Semesters:"
+            android:textAlignment="textStart"
+            android:textColor="@color/white"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/semester_grade"
+            android:layout_width="88dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="21dp"
+            android:text="GPA:"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="30sp" />
+    </LinearLayout>
 
 </RelativeLayout>

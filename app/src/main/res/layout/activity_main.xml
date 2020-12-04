@@ -29,13 +29,15 @@
 
     <Button
         android:id="@+id/button"
-        android:layout_width="404dp"
+        android:layout_width="0dp"
         android:layout_height="61dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:onClick="viewSemesters"
         android:text="@string/viewSemsButton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:onClick="viewSemesters"/>
+        app:layout_constraintStart_toStartOf="parent" />
 
 
     <TextView
@@ -91,8 +93,8 @@
 
     <Button
         android:id="@+id/btn_targetGPA"
-        android:layout_width="157dp"
-        android:layout_height="53dp"
+        android:layout_width="210dp"
+        android:layout_height="wrap_content"
         android:onClick="targetGpaClicked"
         android:text="Display Needed GPA"
         android:textSize="10sp"

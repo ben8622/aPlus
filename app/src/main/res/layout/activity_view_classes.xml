@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,9 +11,11 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerv_view"
         android:layout_width="match_parent"
-        android:layout_height="697dp"
-        android:layout_below="@+id/tv_title"
-        android:layout_marginTop="2dp" />
+        android:layout_height="match_parent"
+        android:layout_below="@+id/topbar"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="0dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButton2"
@@ -26,20 +27,46 @@
         android:layout_marginBottom="20dp"
         android:clickable="true"
         android:onClick="addButtonClicked"
+        app:backgroundTint="#488CC4"
         app:srcCompat="@android:drawable/ic_menu_add" />
 
-    <TextView
-        android:id="@+id/tv_title"
-        android:layout_width="148dp"
-        android:layout_height="44dp"
-        android:text="TextView" />
+    <LinearLayout
+        android:id="@+id/topbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#488CC4"
+        android:gravity="fill_vertical"
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/tv_title2"
-        android:layout_width="148dp"
-        android:layout_height="44dp"
-        android:layout_marginStart="1dp"
-        android:layout_toEndOf="@+id/tv_title"
-        android:text="TextView" />
+        <TextView
+            android:id="@+id/class_name"
+            android:layout_width="165dp"
+            android:layout_height="wrap_content"
+            android:text="Courses:"
+            android:textAlignment="textStart"
+            android:textColor="@color/white"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/class_grade"
+            android:layout_width="112dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:text="Grade:"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/class_weight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:text="Credits:"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="30sp" />
+    </LinearLayout>
+
 
 </RelativeLayout>

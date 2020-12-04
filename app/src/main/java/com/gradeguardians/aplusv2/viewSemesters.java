@@ -22,8 +22,6 @@ public class viewSemesters extends AppCompatActivity {
 
     String curr_user;
 
-    TextView tv_semester;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,9 +31,6 @@ public class viewSemesters extends AppCompatActivity {
         shared_pref = PreferenceManager.getDefaultSharedPreferences(viewSemesters.this);
 
         curr_user = shared_pref.getString(getString(R.string.USER_KEY), "error");
-
-        tv_semester = findViewById(R.id.tv_semester);
-        tv_semester.setText("Semester:         GPA:");
 
         db_helper.calcCumGPA(curr_user);
 

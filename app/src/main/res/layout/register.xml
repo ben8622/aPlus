@@ -5,25 +5,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
+    <TextView
+        android:id="@+id/backtext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Changed your mind?"
+        app:layout_constraintBottom_toTopOf="@+id/btn_return"
+        app:layout_constraintStart_toStartOf="@id/btn_register" />
+
     <Button
         android:id="@+id/btn_register"
-        android:layout_width="wrap_content"
+        android:layout_width="210dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
         android:onClick="registerClicked"
         android:text="Register"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/et_password"
+        app:layout_constraintStart_toStartOf="@+id/et_password"
         app:layout_constraintTop_toBottomOf="@+id/et_password" />
 
     <Button
         android:id="@+id/btn_return"
-        android:layout_width="105dp"
-        android:layout_height="46dp"
+        android:layout_width="210dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
         android:onClick="returnClicked"
-        android:text="Return"
+        android:text="Back"
         app:layout_constraintEnd_toEndOf="@+id/btn_register"
-        app:layout_constraintHorizontal_bias="0.666"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/btn_register"
         app:layout_constraintTop_toBottomOf="@+id/btn_register" />
 
@@ -55,9 +65,9 @@
     <TextView
         android:id="@+id/textView6"
         android:layout_width="197dp"
-        android:layout_height="52dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="150dp"
-        android:text="REGISTER"
+        android:text="lets sign up and get started"
         android:textAlignment="center"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
