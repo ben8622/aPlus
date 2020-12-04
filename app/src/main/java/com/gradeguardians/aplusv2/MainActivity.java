@@ -77,7 +77,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void targetGpaClicked(View view){
-        double target = Double.parseDouble(et_targetGPA.getText().toString());
+        double target = -1;
+        try {
+            target = Double.parseDouble(et_targetGPA.getText().toString());
+        }catch(NumberFormatException e){
+            Toast.makeText(this, "Must Enter Valid GPA", Toast.LENGTH_SHORT).show();
+        }
 
         /* avoid extra computation if the input is wrong */
         if(target < 0 || target > 4.0){

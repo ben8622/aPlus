@@ -58,7 +58,7 @@ public class AddCourse extends AppCompatActivity {
         c = new Course(curr_user, curr_semester, course_id, course_weight, course_grade);
 
         /* adding course to database and displaying result */
-        if(course_grade == -1 || course_weight == -1 ) {
+        if(course_grade < 0 || course_weight < 0 || course_grade > 100 || course_weight > 4 ) {
             Toast.makeText( AddCourse.this, "ERROR: Course Weight or Grade not valid.", Toast.LENGTH_SHORT).show();
         }else if(db_helper.addCourse(c)){
             Toast.makeText( AddCourse.this, "Course added.", Toast.LENGTH_SHORT).show();
