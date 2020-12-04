@@ -37,13 +37,13 @@ public class AddSemester extends AppCompatActivity {
     public void confirmClicked(View view){
 
         /* grabbing values and creating semester object */
-        Toast.makeText( AddSemester.this, "Semester test added.", Toast.LENGTH_SHORT).show();
+
         String course_id = et_course_id.getText().toString();
         s = new Semester(curr_user, course_id);
 
         /* adding semester to database and displaying result */
         if(db_helper.addSemester(s)){
-            Toast.makeText( AddSemester.this, "Semester added.", Toast.LENGTH_SHORT).show();
+            Toast.makeText( AddSemester.this, et_course_id.getText().toString() + " added.", Toast.LENGTH_SHORT).show();
         }
         else{
             Toast.makeText( AddSemester.this, "ERROR: Adding semester failed.", Toast.LENGTH_SHORT).show();

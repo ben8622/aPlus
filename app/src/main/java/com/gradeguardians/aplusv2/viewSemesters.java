@@ -73,7 +73,6 @@ public class viewSemesters extends AppCompatActivity {
        }
 
     public void addButtonClicked(View view) {
-        Toast.makeText(this, "|" + curr_user + "|", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, AddSemester.class);
         startActivity(intent);
     }

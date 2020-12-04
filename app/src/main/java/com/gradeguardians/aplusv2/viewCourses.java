@@ -41,6 +41,8 @@ public class viewCourses extends AppCompatActivity {
         curr_user = shared_pref.getString("username", "error");
         curr_semester = shared_pref.getString(getString(R.string.SEM_KEY), "error");
 
+        db_helper.calcSemGpa(curr_user, curr_semester);
+
         m_users_courses = grabCourses("user", "Semester1");
 
         /* Called from onCreate and onRestart to always have an updated list */
@@ -53,7 +55,9 @@ public class viewCourses extends AppCompatActivity {
 
         /* reset list that RecyclerView is displaying */
         m_users_courses.clear();
-        m_users_courses = grabCourses("user", "Semester1");
+        m_users_courses = grabCourses(curr_user, curr_semester);
+
+        db_helper.calcSemGpa(curr_user, curr_semester);
 
         initRecyclerView();
     }

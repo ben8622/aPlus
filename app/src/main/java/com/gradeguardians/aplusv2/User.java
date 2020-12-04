@@ -27,6 +27,6 @@ public class User {
 
     public String getUserID(){ return user_id; }
     public String getPass(){ return pass; }
-    public String getGPA(){ return Double.toString(cumGPA);}
+    public String getGPA(){ return String.format("%.2f", cumGPA);}
 }
 

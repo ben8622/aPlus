@@ -173,6 +173,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public boolean deleteSemester(Semester sem){
         boolean ret = false;
 
+        /* first delete all the courses */
+        List<Course> all_courses = getAllCourses(sem.getUserID(), sem.getSemesterID());
+        for(Course c : all_courses){
+            deleteCourse(c);
+        }
+
+        /* now delete semester itself */
         SQLiteDatabase db = this.getWritableDatabase();
         String query_string =   "DELETE FROM " + SEM_TABLE +
                                 " WHERE " + COLUMN_USER_ID + "=?" +
@@ -181,9 +188,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(query_string, new String[] {sem.getUserID(), sem.getSemesterID()});
 
         if(cursor.moveToFirst()) {
+            cursor.close();
+            db.close();
             return true;
         }
         else{
+            cursor.close();
+            db.close();
             return false;
         }
     }
@@ -199,9 +210,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(query_string, new String[] {course.getUserID(), course.getSemesterID(), course.getCourseID()});
 
         if(cursor.moveToFirst()) {
+            cursor.close();
+            db.close();
             return true;
         }
         else{
+            cursor.close();
+            db.close();
             return false;
         }
     }
@@ -231,35 +246,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return all_users;
-    }
-    public User grabOneUser(String user_id){
-        User u;
-
-        String query_string ="SELECT * FROM " + USER_TABLE;
-
-        SQLiteDatabase db =this.getReadableDatabase();
-
-        Cursor cursor = db.rawQuery(query_string, null);
-
-        if(cursor.moveToFirst()){
-            do{
-                String username = cursor.getString(0);
-                if(username.equals(user_id)){
-                    String password = cursor.getString(1);
-                    String cumGPA = cursor.getString(2);
-                    double d_cumGPA = Double.parseDouble(cumGPA);
-
-                    u = new User(username, password, d_cumGPA);
-
-                    cursor.close();
-                    db.close();
-                    return u;
-                }
-
-
-            }while(cursor.moveToNext());
-        }
-        return null;
     }
     public List<Semester> getAllSemester(String user_id){
         /* a user_id is passed in this function to only retrieve the semesters from the specified user */
@@ -292,7 +278,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         cursor.close();
         db.close();
-        return all_sems;
+
+        /* flip order of semesters so newest semester is at the top */
+        List <Semester> ordered_sems = new ArrayList<>();
+        for(int i = all_sems.size() - 1; i > -1; i--){
+            ordered_sems.add(all_sems.get(i));
+        }
+
+        return ordered_sems;
     }
     public List<Course> getAllCourses(String user_id, String sem_id){
         /* a user_id & sem_id is passed in this function to only retrieve the courses from the specified user & semester */
@@ -324,11 +317,48 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         cursor.close();
         db.close();
-        return all_courses;
+
+        /* flip order of semesters so newest semester is at the top */
+        List <Course> ordered_courses = new ArrayList<>();
+        for(int i = all_courses.size() - 1; i > -1; i--){
+            ordered_courses.add(all_courses.get(i));
+        }
+        return ordered_courses;
     }
 
+    public User grabOneUser(String user_id){
+        User u;
+
+        String query_string ="SELECT * FROM " + USER_TABLE;
+
+        SQLiteDatabase db =this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(query_string, null);
+
+        if(cursor.moveToFirst()){
+            do{
+                String username = cursor.getString(0);
+                if(username.equals(user_id)){
+                    String password = cursor.getString(1);
+                    String cumGPA = cursor.getString(2);
+                    double d_cumGPA = Double.parseDouble(cumGPA);
+
+                    u = new User(username, password, d_cumGPA);
+
+                    cursor.close();
+                    db.close();
+                    return u;
+                }
+
+
+            }while(cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return null;
+    }
     public void editUserGPA(String user_id, double GPA){
-        String s_GPA = Double.toString(GPA);
+        String s_GPA = String.format("%.2f", GPA);;
 
         String query_string =   "UPDATE " + USER_TABLE +
                                 " SET " + COLUMN_CUMGPA + "=?" +
@@ -336,12 +366,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL(query_string, new String[] {s_GPA, user_id});
+        db.close();
+    }
+    public void editSemGPA(String user_id, String sem_id, double GPA){
+        String s_GPA = String.format("%.2f", GPA);
+
+        String query_string =   "UPDATE " + SEM_TABLE +
+                " SET " + COLUMN_SEM_GPA + "=?" +
+                " WHERE " + COLUMN_USER_ID + "=?" +
+                " AND " + COLUMN_SEM_ID + "=?";
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL(query_string, new String[] {s_GPA, user_id, sem_id});
+        db.close();
     }
 
     public void calcCumGPA(String user_id){
         List<Semester> all_sems = this.getAllSemester(user_id);
-        int sum = 0 ;
-        int total_credits = 0;
+        double sum = 0 ;
+        double total_credits = 0;
         for(Semester sem : all_sems) {
             List<Course> sem_courses = this.getAllCourses(user_id, sem.getSemesterID());
             for (Course course : sem_courses) {
@@ -368,10 +411,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
 
     }
-
-    public double calcSemGpa(String user_id, String sem_id){
-        int sum = 0 ;
-        int sem_credits = 0 ;
+    public void calcSemGpa(String user_id, String sem_id){
+        double sum = 0 ;
+        double sem_credits = 0 ;
         List<Course> sem_courses = this.getAllCourses(user_id,sem_id);
 
         for(Course course: sem_courses){
@@ -390,7 +432,33 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         }
 
-        return sum/sem_credits;
+        if(sem_credits != 0){
+            editSemGPA(user_id, sem_id, sum/sem_credits);
+        }
+        else{
+            editSemGPA(user_id, sem_id, 0);
+        }
+    }
+    public double calcAllButOneGPA(String user_id){
+        List<Semester> all_sems = this.getAllSemester(user_id);
+        int first = 0;
+
+        double sum_of_GPAS = 0;
+
+        for( Semester sem : all_sems){
+
+            /* skip most recent semester */
+            if(first ==0){
+                first =1;
+                continue;
+            }
+            else{
+                sum_of_GPAS += sem.getSemesterGPA();
+            }
+        }
+
+        return sum_of_GPAS;
+
     }
 
 }

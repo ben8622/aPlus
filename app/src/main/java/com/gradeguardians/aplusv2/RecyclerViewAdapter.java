@@ -64,7 +64,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         Log.d(TAG, "onBindViewHolder: called."); //prints out to log every time item put in (debugging)
 
         holder.semesterName.setText(mSemesters.get(position).getSemesterID());
-        holder.semesterGrade.setText(Double.toString(mSemesters.get(position).getSemesterGPA()));
+        holder.semesterGrade.setText(String.format("%.2f", mSemesters.get(position).getSemesterGPA()));
 
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
