@@ -38,7 +38,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     String user_id;
 
     // default constructor
-    public RecyclerViewAdapter(Context mContext, List <Semester> mSemesters, String curr_user) {
+    public RecyclerViewAdapter(Context mContext, String curr_user) {
         db_helper = new DatabaseHelper(mContext);
         shared_pref = PreferenceManager.getDefaultSharedPreferences(mContext);
 

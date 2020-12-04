@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
 
@@ -21,8 +22,7 @@ public class viewSemesters extends AppCompatActivity {
 
     String curr_user;
 
-    // variables (this should come from our user object)
-    List<Semester> m_user_semester;
+    TextView tv_semester;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +34,8 @@ public class viewSemesters extends AppCompatActivity {
 
         curr_user = shared_pref.getString(getString(R.string.USER_KEY), "error");
 
-        m_user_semester = db_helper.getAllSemester(curr_user);
+        tv_semester = findViewById(R.id.tv_semester);
+        tv_semester.setText("Semester:         GPA:");
 
         db_helper.calcCumGPA(curr_user);
 
@@ -46,10 +47,6 @@ public class viewSemesters extends AppCompatActivity {
         super.onRestart();
 
         db_helper.calcCumGPA(curr_user);
-
-        m_user_semester.clear();
-
-        m_user_semester = db_helper.getAllSemester("user");
 
         initRecyclerView();
     }
@@ -74,7 +71,7 @@ public class viewSemesters extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.recyclerv_view);
 
         // Passing the adapter our info on its construction
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, m_user_semester, curr_user);
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, curr_user);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }

@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gradeguardians.aplusv2.Course;
@@ -24,6 +25,8 @@ public class viewCourses extends AppCompatActivity {
 
     DatabaseHelper db_helper;
     SharedPreferences shared_pref;
+
+    TextView tv_title;
 
     String curr_user;
     String curr_semester;
