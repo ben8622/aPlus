@@ -91,13 +91,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             public void onClick(View view) {
                 Log.d(TAG, "onClick: clocked on: " + mSemesters.get(position).getSemesterID());
 
-                String user_id = "user"; //grab from shared_prefs
-                String sem_id = mSemesters.get(position).getSemesterID();
-
-                Semester s = new Semester(user_id, sem_id, 0);
+                Semester s = new Semester(mSemesters.get(position).getUserID(), mSemesters.get(position).getSemesterID(), 0);
 
                 /* this is to avoid accessing index that is out of bounds */
-                if (position == mSemesters.size() - 1) { // if last element is deleted, no need to shift
+                if (position == mSemesters.size() - 1 || position == 0) { // if last element is deleted, no need to shift
                     mSemesters.remove(position);
                     db_helper.deleteSemester(s);
                     notifyItemRemoved(position);

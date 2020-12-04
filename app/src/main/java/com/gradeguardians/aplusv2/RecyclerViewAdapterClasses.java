@@ -72,10 +72,12 @@ public class RecyclerViewAdapterClasses extends RecyclerView.Adapter<RecyclerVie
                         String sem_id = curr_sem; //grab from shared_prefs
                         String course_id = course_list.get(position).getCourseID();
 
-                        Course c = new Course(user_id, sem_id, course_id, 0, 0.0);
+                        Course c = new Course(course_list.get(position).getUserID(),
+                                              course_list.get(position).getSemesterID(),
+                                              course_list.get(position).getCourseID(), 0, 0.0);
 
                         /* this is to avoid accessing index that is out of bounds */
-                        if (position == course_list.size() - 1) { // if last element is deleted, no need to shift
+                        if (position == course_list.size() - 1 || position == 0 ) { // if last element is deleted, no need to shift
                             course_list.remove(position);
                             db_helper.deleteCourse(c);
                             notifyItemRemoved(position);
