@@ -66,11 +66,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.semesterName.setText(mSemesters.get(position).getSemesterID());
         holder.semesterGrade.setText(String.format("%.2f", mSemesters.get(position).getSemesterGPA()));
 
+        /* on click listener for list item, starts viewCourses for said semester */
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(TAG, "onClick: clocked on: " + mSemesters.get(position).getSemesterID());
-
+                /* update semester key */
                 SharedPreferences.Editor prefEditor = shared_pref.edit();
                 try{
                     prefEditor.putString("semester", mSemesters.get(position).getSemesterID());
@@ -79,18 +79,19 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 catch (Exception e){
                     Toast.makeText( mContext, "ERROR in adding user to preferences", Toast.LENGTH_LONG).show();
                 }
-                // For now this will just display a popup of the semester name, but we want it
-                // to eventually bring you to a new activity holding the classes of the semester
+
+                /* activity start */
                 Toast.makeText(mContext, mSemesters.get(position).getSemesterID(), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(mContext, viewCourses.class);
                 mContext.startActivity(intent);
             }
         });
+        /* on click listener for del button of each list item */
         holder.btn_del.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(TAG, "onClick: clocked on: " + mSemesters.get(position).getSemesterID());
 
+                /* creat sem object to send to use for deletion method */
                 Semester s = new Semester(mSemesters.get(position).getUserID(), mSemesters.get(position).getSemesterID(), 0);
 
                 /* this is to avoid accessing index that is out of bounds */
@@ -111,10 +112,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                         }
                     }
                 }
-
                 Toast.makeText(mContext, "Deleted", Toast.LENGTH_SHORT).show();
-
-
             }
         });
 
